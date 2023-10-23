@@ -249,6 +249,7 @@ Thank you for your interest in the project, and I look forward to any contributi
 
 ## **Credits**
 
+- A lot of initial code inspiration came from Code Institute's "Django Blog" walkthrough project
 - https://startbootstrap.com/template/blog-home - Template for homepage
 - https://startbootstrap.com/template/blog-post - Template for individual blog entries
 - https://www.youtube.com/watch?v=WAmEZBEeNmg - This video got me off the ground when integrating the Spotify API
