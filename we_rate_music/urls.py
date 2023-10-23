@@ -20,6 +20,7 @@ from blog.views import SeasonList
 
 urlpatterns = [
     path('', SeasonList.as_view(), name='homepage'),
+    path('season/', include('blog.urls')),
     path('admin/', admin.site.urls),
-    path("accounts/", include("allauth.urls")),
+    path('accounts/', include('allauth.urls')),
 ]

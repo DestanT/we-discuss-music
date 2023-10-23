@@ -1,11 +1,8 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import View
 from django.views.generic import ListView
 from .models import Season
-
-
-def homepage(request):
-    return render(request, 'index.html')
 
 
 class SeasonList(ListView):
@@ -18,3 +15,14 @@ class SeasonList(ListView):
         context = super().get_context_data(**kwargs)
         context['latest_season'] = Season.objects.first()
         return context
+    
+
+class SeasonDetail(View):
+    def get(self, request, *args, **kwargs):
+        queryset = Season.objects.all()
+        post = get_object_or_404(queryset, slug=self.kwargs.get('slug'))
+
+        return render(
+            request,
+            'blog/season_details.html'
+        )
