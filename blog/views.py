@@ -8,7 +8,7 @@ from .models import Season
 class SeasonList(ListView):
     model = Season
     queryset = Season.objects.all().order_by('-created_on')
-    template_name = 'index.html'
+    template_name = 'blog/season_posts.html'
     paginate_by = 4
 
     def get_context_data(self, **kwargs):
