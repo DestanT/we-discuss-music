@@ -55,7 +55,9 @@
                         <h2 class="card-title">Current Season: {{ latest_season.title }}</h2>
                         <p class="card-text">This seasons rules are:</p>
                         <p class="card-text">{{ latest_season.description }}</p>
-                        <a class="btn btn-primary" href="#!">Read more →</a>
+                        <a class="btn btn-primary" href="{% url 'season_details' slug=latest_season.slug %}">
+                            Read more →
+                        </a>
                     </div>
                 </div>
                 <!-- Nested row for non-featured blog posts-->
@@ -71,7 +73,9 @@
                                 <h2 class="card-title h4">{{ season.title }}</h2>
                                 <p class="card-text">This seasons rules are:</p>
                                 <p class="card-text">{{ season.description }}</p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
+                                <a class="btn btn-primary" href="{% url 'season_details' slug=season.slug %}">
+                                    Read more →
+                                </a>
                             </div>
                         </div>
                     </div>
