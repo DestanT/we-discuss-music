@@ -41,6 +41,7 @@ class CommentReplies(models.Model):
 
     class Meta:
         ordering = ['created_on']
+        verbose_name_plural = 'Replies'
 
     def __str__(self):
         return self.body
