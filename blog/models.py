@@ -21,7 +21,7 @@ class Season(models.Model):
 class Comment(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    comment = models.TextField(blank=False)
+    body = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
@@ -35,7 +35,7 @@ class Comment(models.Model):
 class CommentReplies(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
-    reply = models.TextField(blank=False)
+    body = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
