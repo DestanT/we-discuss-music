@@ -18,3 +18,14 @@ class CommentAdmin(admin.ModelAdmin):
 
     def approve_comment(self, request, queryset):
         queryset.update(approved=True)
+
+
+@admin.register(CommentReplies)
+class CommentRepliesAdmin(admin.ModelAdmin):
+    list_display = ('user', 'comment', 'created_on', 'body', 'approved')
+    list_filter = ('user', 'comment', 'created_on', 'approved')
+    search_fields = ('user', 'comment', 'body')
+    actions = ['approve_comment']
+
+    def approve_comment(self, request, queryset):
+        queryset.update(approved=True)
