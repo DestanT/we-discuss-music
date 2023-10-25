@@ -30,3 +30,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body
+    
+
+class CommentReplies(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
+    body = models.TextField(blank=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return self.body
