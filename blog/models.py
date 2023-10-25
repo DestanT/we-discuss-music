@@ -21,7 +21,7 @@ class Season(models.Model):
 class Comment(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    body = models.TextField(blank=False)
+    comment = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
@@ -29,13 +29,13 @@ class Comment(models.Model):
         ordering = ['created_on']
 
     def __str__(self):
-        return self.body
+        return self.comment
     
 
 class CommentReplies(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
-    body = models.TextField(blank=False)
+    reply = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
@@ -44,4 +44,4 @@ class CommentReplies(models.Model):
         verbose_name_plural = 'Replies'
 
     def __str__(self):
-        return self.body
+        return self.reply

@@ -11,9 +11,9 @@ class SeasonAdmin(admin.ModelAdmin):
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'season', 'created_on', 'body', 'approved')
+    list_display = ('approved', 'user', 'season', 'comment', 'created_on')
     list_filter = ('user', 'season', 'created_on', 'approved')
-    search_fields = ('user', 'season', 'body')
+    search_fields = ('user', 'season', 'comment')
     actions = ['approve_comment']
 
     def approve_comment(self, request, queryset):
@@ -22,9 +22,9 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(CommentReplies)
 class CommentRepliesAdmin(admin.ModelAdmin):
-    list_display = ('user', 'comment', 'created_on', 'body', 'approved')
+    list_display = ('approved', 'user', 'comment', 'reply', 'created_on')
     list_filter = ('user', 'comment', 'created_on', 'approved')
-    search_fields = ('user', 'comment', 'body')
+    search_fields = ('user', 'comment', 'reply')
     actions = ['approve_comment']
 
     def approve_comment(self, request, queryset):
