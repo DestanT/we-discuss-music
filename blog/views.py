@@ -23,11 +23,12 @@ class SeasonDetail(View):
         slug = self.kwargs.get('slug')
         season = get_object_or_404(Season, slug=slug)
 
+        # Get Comment and CommentReplies objects in season post
         comments = Comment.objects.filter(season=season)
         replies = CommentReplies.objects.filter(comment__in=comments)
 
+        # Put objects in data dict
         comment_data = {}
-
         for comment in comments:
             comment_data[comment] = replies.filter(comment=comment)
 
