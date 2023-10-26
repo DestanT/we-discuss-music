@@ -12,6 +12,7 @@ class Season(models.Model):
 
     class Meta:
         ordering = ['-created_on']
+        verbose_name_plural = 'Season Posts'
 
     def __str__(self):
         return self.title

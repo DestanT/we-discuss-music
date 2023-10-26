@@ -1,10 +1,13 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 from .models import *
 
 
+# Credit: CI 'Django Blog' walkthrough project
 @admin.register(Season)
-class SeasonAdmin(admin.ModelAdmin):
-    list_display = ('created_on', 'author', 'title')
+class PostAdmin(SummernoteModelAdmin):
+    summernote_fields = ('description')
+    list_display = ('author', 'title', 'created_on')
     prepopulated_fields = {'slug': ('title',)}
 
 
