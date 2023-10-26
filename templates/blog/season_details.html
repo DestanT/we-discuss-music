@@ -1,4 +1,7 @@
 {% extends "base.html" %} {% block content %}
+
+{% load crispy_forms_tags %}
+
 <!-- Page content-->
 <div class="container mt-5">
     <div class="row">
@@ -46,11 +49,18 @@
             <section class="mb-5">
                 <div class="card bg-light">
                     <div class="card-body">
+
                         <!-- Comment form-->
+                        {% if user.is_authenticated %}
+                        <h4>Leave a comment:</h4>
                         <form method="post" class="mb-4">
-                            <textarea class="form-control" rows="3"
-                                placeholder="Join the discussion and leave a comment!"></textarea>
+                            {% csrf_token %}
+                            {{ comment_form | crispy }}
+                            <p>Posting as: {{ user.username }}</p>
+                            <button type="submit" class="btn btn-outline-success">Comment</button>
                         </form>
+                        {% endif %}
+
                         <!-- Comment with nested comments-->
                         {% for comment, replies in comment_data.items %}
                         <div class="d-flex mb-4">

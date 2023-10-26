@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
 from .models import Season, Comment, CommentReply
+from .forms import CommentForm
 
 
 class SeasonList(ListView):
@@ -38,5 +39,6 @@ class SeasonDetail(View):
             {
                 'season': season,
                 'comment_data': comment_data,
+                'comment_form': CommentForm(),
             }
         )
