@@ -2,7 +2,7 @@ from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
-from .models import Season, Comment, CommentReplies
+from .models import Season, Comment, CommentReply
 
 
 class SeasonList(ListView):
@@ -25,7 +25,7 @@ class SeasonDetail(View):
 
         # Get Comment and CommentReplies objects in season post
         comments = Comment.objects.filter(season=season)
-        replies = CommentReplies.objects.filter(comment__in=comments)
+        replies = CommentReply.objects.filter(comment__in=comments)
 
         # Put objects in data dict
         comment_data = {}

@@ -33,7 +33,7 @@ class Comment(models.Model):
         return self.body
     
 
-class CommentReplies(models.Model):
+class CommentReply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
     body = models.TextField(blank=False)
@@ -42,7 +42,7 @@ class CommentReplies(models.Model):
 
     class Meta:
         ordering = ['created_on']
-        verbose_name_plural = 'Replies'
+        verbose_name_plural = 'Comment Replies'
 
     def __str__(self):
         return self.body

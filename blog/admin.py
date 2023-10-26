@@ -5,7 +5,7 @@ from .models import *
 
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Season)
-class PostAdmin(SummernoteModelAdmin):
+class SeasonAdmin(SummernoteModelAdmin):
     summernote_fields = ('description')
     list_display = ('author', 'title', 'created_on')
     prepopulated_fields = {'slug': ('title',)}
@@ -23,8 +23,8 @@ class CommentAdmin(admin.ModelAdmin):
         queryset.update(approved=True)
 
 
-@admin.register(CommentReplies)
-class CommentRepliesAdmin(admin.ModelAdmin):
+@admin.register(CommentReply)
+class CommentReplyAdmin(admin.ModelAdmin):
     list_display = ('approved', 'user', 'comment', 'body', 'created_on')
     list_filter = ('user', 'comment', 'created_on', 'approved')
     search_fields = ('user', 'comment', 'body')
