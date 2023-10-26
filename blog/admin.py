@@ -25,6 +25,7 @@ class CommentAdmin(admin.ModelAdmin):
         queryset.update(approved=True)
 
 
+# Credit: CI 'Django Blog' walkthrough project
 @admin.register(CommentReply)
 class CommentReplyAdmin(admin.ModelAdmin):
     list_display = ('approved', 'user', 'comment', 'body', 'created_on')
