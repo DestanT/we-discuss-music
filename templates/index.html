@@ -16,8 +16,8 @@
         <div class="col-lg-8">
             <!-- Latest season post-->
             <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                        alt="..." /></a>
+                <a href="{% url 'season_details' slug=latest_season.slug %}"><img class="card-img-top"
+                        src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                 <div class="card-body">
                     <div class="small text-muted">{{ latest_season.created_on }}</div>
                     <h2 class="card-title">Current Season: {{ latest_season.title }}</h2>
@@ -34,8 +34,8 @@
                 <div class="col-lg-6">
                     <!-- Blog post-->
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg"
-                                alt="..." /></a>
+                        <a href="{% url 'season_details' slug=latest_season.slug %}"><img class="card-img-top"
+                                src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted">{{ season.created_on }}</div>
                             <h2 class="card-title h4">{{ season.title }}</h2>
