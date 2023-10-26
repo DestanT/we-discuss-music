@@ -2,7 +2,7 @@ from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView
-from .models import Season, Comment
+from .models import Season, Comment, CommentReplies
 
 
 class SeasonList(ListView):
@@ -23,13 +23,19 @@ class SeasonDetail(View):
         slug = self.kwargs.get('slug')
         season = get_object_or_404(Season, slug=slug)
 
-        comments = season.comments.all()  # type: ignore - Reverse relationship ("related_name")
+        comments = Comment.objects.filter(season=season)
+        replies = CommentReplies.objects.filter(comment__in=comments)
+
+        comment_data = {}
+
+        for comment in comments:
+            comment_data[comment] = replies.filter(comment=comment)
 
         return render(
             request,
             'blog/season_details.html',
             {
                 'season': season,
-                'comments': comments,
+                'comment_data': comment_data,
             }
         )

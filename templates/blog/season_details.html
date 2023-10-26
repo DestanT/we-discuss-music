@@ -49,24 +49,25 @@
                                 placeholder="Join the discussion and leave a comment!"></textarea>
                         </form>
                         <!-- Comment with nested comments-->
-                        {% for comment in comments %}
+                        {% for comment, replies in comment_data.items %}
                         <div class="d-flex mb-4">
                             <!-- Comments -->
                             <div class="flex-shrink-0"><img class="rounded-circle"
                                     src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                             <div class="ms-3">
                                 <div class="fw-bold">{{ comment.user }}</div>
-                                {{ comment }}
+                                {{ comment.body }}
                                 <!-- Replies -->
+                                {% for reply in replies %}
                                 <div class="d-flex mt-4">
                                     <div class="flex-shrink-0"><img class="rounded-circle"
                                             src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                                     <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        And under those conditions, you cannot establish a capital-market evaluation
-                                        of that enterprise. You can't get investors.
+                                        <div class="fw-bold">{{ reply.user }}</div>
+                                        {{ reply.body }}
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
                         </div>
                         {% endfor %}

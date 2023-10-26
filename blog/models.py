@@ -29,7 +29,7 @@ class Comment(models.Model):
         ordering = ['created_on']
 
     def __str__(self):
-        return self.comment
+        return self.body
     
 
 class CommentReplies(models.Model):
@@ -44,4 +44,4 @@ class CommentReplies(models.Model):
         verbose_name_plural = 'Replies'
 
     def __str__(self):
-        return self.reply
+        return self.body
