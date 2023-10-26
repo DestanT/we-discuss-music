@@ -8,7 +8,7 @@ from .models import Season, Comment, CommentReply
 class SeasonList(ListView):
     model = Season
     queryset = Season.objects.all().order_by('-created_on')
-    template_name = 'blog/season_posts.html'
+    template_name = 'index.html'
     paginate_by = 4
 
     # Always display the latest season post - bypasses pagination logic
