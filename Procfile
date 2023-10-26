@@ -1,1 +1,1 @@
-web: gunicorn we_rate_music_simplified.wsgi
+web: gunicorn we_rate_music.wsgi
