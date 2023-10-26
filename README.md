@@ -266,3 +266,12 @@ Thank you for your interest in the project, and I look forward to any contributi
 - [WhiteNoise Django Documentation](https://whitenoise.readthedocs.io/en/latest/django.html)
 - [Stack Overflow](https://stackoverflow.com/) - general enquiries/syntax
 - [W3Schools](https://www.w3schools.com/) - general enquiries/syntax
+
+<!--
+PROBLEMS:
+- User signup, when entering an email address, throws an error.
+- Add 'active' class in base.html nav elements:
+   - <li class="nav-item"><a class="nav-link {% if request.path == homepage_url %}active{% endif %}" href="{% url 'homepage' %}">Home</a></li>
+- Add aria-current in base.html nav elements:
+   - <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'account_signup' %}">Sign Up</a></li>
+-->
