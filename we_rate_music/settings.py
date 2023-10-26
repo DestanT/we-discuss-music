@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('LOCAL_HOST', ''), 'we-rate-music-simplified.herokuapp.com']
+ALLOWED_HOSTS = [os.getenv('LOCAL_HOST', ''), 'we-rate-music-simplified-c7886543742e.herokuapp.com']
 
 
 # Application definition
