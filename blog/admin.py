@@ -7,7 +7,9 @@ from .models import *
 @admin.register(Season)
 class SeasonAdmin(SummernoteModelAdmin):
     summernote_fields = ('description')
-    list_display = ('author', 'title', 'created_on')
+    list_display = ('author', 'description', 'title', 'created_on')
+    list_filter = ('author', 'created_on')
+    search_fields = ['title', 'description']
     prepopulated_fields = {'slug': ('title',)}
 
 
@@ -16,7 +18,7 @@ class SeasonAdmin(SummernoteModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('approved', 'user', 'season', 'body', 'created_on')
     list_filter = ('user', 'season', 'created_on', 'approved')
-    search_fields = ('user', 'season', 'body')
+    search_fields = ['body']
     actions = ['approve_comment']
 
     def approve_comment(self, request, queryset):
@@ -27,7 +29,7 @@ class CommentAdmin(admin.ModelAdmin):
 class CommentReplyAdmin(admin.ModelAdmin):
     list_display = ('approved', 'user', 'comment', 'body', 'created_on')
     list_filter = ('user', 'comment', 'created_on', 'approved')
-    search_fields = ('user', 'comment', 'body')
+    search_fields = ['body']
     actions = ['approve_comment']
 
     def approve_comment(self, request, queryset):
