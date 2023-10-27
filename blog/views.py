@@ -82,5 +82,5 @@ class SeasonDetail(View):
 
 class SeasonDetailView(DetailView):
     model = Season
-    template_name = 'blog/season_details_test.html'
+    template_name = 'blog/season_detail.html'
     context_object_name = 'season'

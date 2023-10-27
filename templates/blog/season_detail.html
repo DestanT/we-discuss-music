@@ -62,7 +62,7 @@
                         {% endif %}
 
                         <!-- Comment with nested comments-->
-                        {% for comment, replies in comment_data.items %}
+                        {% for comment in season.comments.all %}
                         <div class="d-flex mb-4">
                             <!-- Comments -->
                             <div class="flex-shrink-0">
@@ -75,7 +75,7 @@
                                 <a href="#" class="d-flex justify-content-end">reply</a>
 
                                 <!-- Replies -->
-                                {% for reply in replies %}
+                                {% for reply in comment.replies.all %}
                                 <div class="d-flex mt-3">
                                     <div class="flex-shrink-0">
                                         <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
