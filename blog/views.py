@@ -2,6 +2,7 @@ from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 from .models import Season, Comment, CommentReply
 from .forms import CommentForm, CommentReplyForm
 
@@ -84,3 +85,15 @@ class SeasonDetailView(DetailView):
     model = Season
     template_name = 'blog/season_detail.html'
     context_object_name = 'season'
+
+    # Add forms to context data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
+
+# class CommentCreateView(CreateView):
+#     model = Comment
+#     form_class = CommentForm
+    
