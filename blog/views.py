@@ -1,9 +1,9 @@
 from typing import Any
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Season, Comment, CommentReply
-from .forms import CommentForm
+from .forms import CommentForm, CommentReplyForm
 
 
 class SeasonList(ListView):
@@ -24,7 +24,7 @@ class SeasonDetail(View):
         slug = self.kwargs.get('slug')
         season = get_object_or_404(Season, slug=slug)
 
-        # Get Comment and CommentReplies objects in season post
+        # Get Comment and CommentReply objects in season post
         comments = Comment.objects.filter(season=season)
         replies = CommentReply.objects.filter(comment__in=comments)
 
@@ -40,6 +40,7 @@ class SeasonDetail(View):
                 'season': season,
                 'comment_data': comment_data,
                 'comment_form': CommentForm(),
+                'reply_form': CommentReplyForm(),
             }
         )
     
@@ -77,3 +78,9 @@ class SeasonDetail(View):
                 'comment_form': CommentForm(),
             }
         )
+    
+
+class SeasonDetailView(DetailView):
+    model = Season
+    template_name = 'blog/season_details_test.html'
+    context_object_name = 'season'
