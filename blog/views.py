@@ -32,6 +32,7 @@ class SeasonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['reply_form'] = CommentReplyForm()
         return context
 
 
@@ -42,6 +43,20 @@ class CommentCreateView(CreateView):
     def form_valid(self, form):
         season = Season.objects.get(slug=self.kwargs.get('slug'))
         form.instance.season = season
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
+    
+
+class ReplyCreateView(CreateView):
+    model = CommentReply
+    form_class = CommentReplyForm
+
+    def form_valid(self, form):
+        comment = Comment.objects.get(id=self.kwargs.get('id'))
+        form.instance.comment = comment
         form.instance.user = self.request.user
         return super().form_valid(form)
     
