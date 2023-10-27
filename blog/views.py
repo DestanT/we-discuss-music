@@ -1,4 +1,7 @@
 from typing import Any
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, DetailView
@@ -20,67 +23,6 @@ class SeasonList(ListView):
         return context
     
 
-class SeasonDetail(View):
-    def get(self, request, *args, **kwargs):
-        slug = self.kwargs.get('slug')
-        season = get_object_or_404(Season, slug=slug)
-
-        # Get Comment and CommentReply objects in season post
-        comments = Comment.objects.filter(season=season)
-        replies = CommentReply.objects.filter(comment__in=comments)
-
-        # Put objects in data dict
-        comment_data = {}
-        for comment in comments:
-            comment_data[comment] = replies.filter(comment=comment)
-
-        return render(
-            request,
-            'blog/season_details.html',
-            {
-                'season': season,
-                'comment_data': comment_data,
-                'comment_form': CommentForm(),
-                'reply_form': CommentReplyForm(),
-            }
-        )
-    
-    def post(self, request, *args, **kwargs):
-        slug = self.kwargs.get('slug')
-        season = get_object_or_404(Season, slug=slug)
-
-        # Comment form data
-        comment_form = CommentForm(data=request.POST)
-
-        if comment_form.is_valid():
-            comment_form.instance.name = request.user.username
-            comment = comment_form.save(commit=False)
-            comment.season = season
-            comment.user = request.user
-            comment.save()
-        else:
-            comment_form = CommentForm()
-
-        # Get Comment and CommentReplies objects in season post
-        comments = Comment.objects.filter(season=season)
-        replies = CommentReply.objects.filter(comment__in=comments)
-
-        # Put objects in data dict
-        comment_data = {}
-        for comment in comments:
-            comment_data[comment] = replies.filter(comment=comment)
-
-        return render(
-            request,
-            'blog/season_details.html',
-            {
-                'season': season,
-                'comment_data': comment_data,
-                'comment_form': CommentForm(),
-            }
-        )
-    
-
 class SeasonDetailView(DetailView):
     model = Season
     template_name = 'blog/season_detail.html'
@@ -93,7 +35,15 @@ class SeasonDetailView(DetailView):
         return context
 
 
-# class CommentCreateView(CreateView):
-#     model = Comment
-#     form_class = CommentForm
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        season = Season.objects.get(slug=self.kwargs.get('slug'))
+        form.instance.season = season
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     
+    def get_success_url(self):
+        return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
