@@ -65,17 +65,23 @@
                         {% for comment, replies in comment_data.items %}
                         <div class="d-flex mb-4">
                             <!-- Comments -->
-                            <div class="flex-shrink-0"><img class="rounded-circle"
-                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            <div class="ms-3">
+                            <div class="flex-shrink-0">
+                                <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                    alt="...">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
                                 <div class="fw-bold">{{ comment.user }}</div>
                                 {{ comment.body }}
+                                <a href="#" class="d-flex justify-content-end">reply</a>
+
                                 <!-- Replies -->
                                 {% for reply in replies %}
-                                <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle"
-                                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
+                                <div class="d-flex mt-3">
+                                    <div class="flex-shrink-0">
+                                        <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                            alt="...">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
                                         <div class="fw-bold">{{ reply.user }}</div>
                                         {{ reply.body }}
                                     </div>
@@ -84,16 +90,6 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <!-- Single comment-->
-                        <div class="d-flex">
-                            <div class="flex-shrink-0"><img class="rounded-circle"
-                                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                When I look at the universe and all the ways the universe wants to kill us, I find
-                                it hard to reconcile that with statements of beneficence.
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -106,7 +102,7 @@
                 <div class="card-body">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="Enter search term..."
-                            aria-label="Enter search term..." aria-describedby="button-search" />
+                            aria-label="Enter search term..." aria-describedby="button-search">
                         <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                     </div>
                 </div>
