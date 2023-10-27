@@ -53,7 +53,7 @@
                         <!-- Comment form-->
                         {% if user.is_authenticated %}
                         <h4>Leave a comment:</h4>
-                        <form method="post" class="mb-4">
+                        <form method="post" action="{% url 'season_comment' slug=season.slug %}" class="mb-4">
                             {% csrf_token %}
                             {{ comment_form | crispy }}
                             <p>Posting as: {{ user.username }}</p>
