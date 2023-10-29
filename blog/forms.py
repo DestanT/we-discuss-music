@@ -19,3 +19,10 @@ class CommentReplyForm(ModelForm):
     class Meta:
         model = CommentReply
         fields = ('body',)
+        labels = {'body': ''}
+        widgets = {
+            'body': Textarea(attrs={
+                'rows': 1,
+                'placeholder': 'Add a reply...',
+            }),
+        }
