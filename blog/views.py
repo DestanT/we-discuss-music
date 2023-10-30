@@ -7,6 +7,8 @@ from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from .models import Season, Comment, CommentReply
 from .forms import SeasonForm, CommentForm, CommentReplyForm
 
@@ -37,6 +39,7 @@ class SeasonDetailView(DetailView):
         return context
     
 
+@method_decorator(staff_member_required, name='dispatch')
 class SeasonCreateView(CreateView):
     model = Season
     form_class = SeasonForm
