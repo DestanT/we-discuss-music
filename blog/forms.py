@@ -1,5 +1,12 @@
-from .models import Comment, CommentReply
+from .models import Season, Comment, CommentReply
 from django.forms import ModelForm, Textarea
+
+
+class SeasonForm(ModelForm):
+    class Meta:
+        model = Season
+        fields = ('title', 'description', 'image')
+        labels = {'title': 'Season Title', 'description': 'Write a short description', 'image': 'Add a cover image'}
 
 
 class CommentForm(ModelForm):
