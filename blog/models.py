@@ -26,7 +26,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     body = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['created_on']
@@ -40,7 +39,6 @@ class CommentReply(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
     body = models.TextField(blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['created_on']

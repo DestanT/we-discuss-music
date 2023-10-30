@@ -16,22 +16,14 @@ class SeasonAdmin(SummernoteModelAdmin):
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('approved', 'user', 'season', 'body', 'created_on')
-    list_filter = ('user', 'season', 'created_on', 'approved')
+    list_display = ('user', 'season', 'body', 'created_on')
+    list_filter = ('user', 'season', 'created_on')
     search_fields = ['body']
-    actions = ['approve_comment']
-
-    def approve_comment(self, request, queryset):
-        queryset.update(approved=True)
 
 
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(CommentReply)
 class CommentReplyAdmin(admin.ModelAdmin):
-    list_display = ('approved', 'user', 'comment', 'body', 'created_on')
-    list_filter = ('user', 'comment', 'created_on', 'approved')
+    list_display = ('user', 'comment', 'body', 'created_on')
+    list_filter = ('user', 'comment', 'created_on')
     search_fields = ['body']
-    actions = ['approve_comment']
-
-    def approve_comment(self, request, queryset):
-        queryset.update(approved=True)
