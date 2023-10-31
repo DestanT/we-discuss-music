@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+
+{% load crispy_forms_tags %}
+
+<!-- Page content-->
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>Search Spotify</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% if search_results %}
+<h1>worked</h1>
+{% endif %}
+{% endblock content %}
