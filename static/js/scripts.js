@@ -1,7 +1,15 @@
-/*!
-* Start Bootstrap - Blog Home v5.0.9 (https://startbootstrap.com/template/blog-home)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-blog-home/blob/master/LICENSE)
-*/
-// This file is intentionally blank
-// Use this file to add JavaScript to your project
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+    const element = document.getElementById('embed-iframe');
+    const options = {
+        width: '100%',
+    };
+    const callback = (EmbedController) => {
+        document.querySelectorAll('.spotify-iframe').forEach(
+            playlist => {
+                playlist.addEventListener('click', () => {
+                    EmbedController.loadUri(playlist.dataset.spotifyId)
+                });
+            })
+    };
+    IFrameAPI.createController(element, options, callback);
+};  
