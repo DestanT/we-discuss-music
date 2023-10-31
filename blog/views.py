@@ -6,11 +6,12 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from .models import Season, Comment, CommentReply
-from .forms import SeasonForm, CommentForm, CommentReplyForm
+from .forms import SeasonForm, CommentForm, CommentReplyForm, SpotifyApiForm
+from .spotify_api import get_access_token, search_for_item
 
 
 class SeasonList(ListView):
@@ -83,3 +84,31 @@ class ReplyCreateView(CreateView):
     
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
+    
+
+class SpotifyApiView(FormView):
+    template_name = 'blog/spotify_search.html'
+    form_class = SpotifyApiForm
+    success_url = 'blog/spotify_search.html'
+
+    # Get stored session data if available
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_results = self.request.session.get('search_results', None)
+        context['search_results'] = search_results
+        return context
+
+    def form_valid(self, form):
+        item = form.cleaned_data['search']
+        params_list = form.cleaned_data['params']
+        params_str = ','.join(params_list)
+
+        # Spotify API calls
+        access_token = get_access_token()
+        search_results = search_for_item(access_token, item, params_str)
+
+        # Store search results in session
+        self.request.session['search_results'] = search_results
+
+        return self.render_to_response(self.get_context_data(form=form))
+
