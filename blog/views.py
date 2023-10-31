@@ -86,6 +86,7 @@ class ReplyCreateView(CreateView):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
     
 
+@method_decorator(staff_member_required, name='dispatch')
 class SpotifyApiView(FormView):
     template_name = 'blog/spotify_search.html'
     form_class = SpotifyApiForm
