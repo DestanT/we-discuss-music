@@ -1,4 +1,5 @@
 from .models import Season, Comment, CommentReply
+from django import forms
 from django.forms import ModelForm, Textarea
 
 
@@ -33,3 +34,18 @@ class CommentReplyForm(ModelForm):
                 'placeholder': 'Add a reply...',
             }),
         }
+
+
+SEARCH_PARAMETERS = [
+    ('album', 'Album'),
+    ('playlist', 'Playlist'),
+]
+
+
+class SpotifyApiForm(forms.Form):
+    search = forms.CharField()
+    params = forms.MultipleChoiceField(
+        required = True,
+        widget = forms.CheckboxSelectMultiple,
+        choices = SEARCH_PARAMETERS,
+    )
