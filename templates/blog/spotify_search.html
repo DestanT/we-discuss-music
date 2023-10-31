@@ -4,7 +4,7 @@
 
 <!-- Page content-->
 <div class="container mt-5 mb-5">
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-lg-8">
             <h2>Search Spotify</h2>
             <form method="post">
@@ -14,8 +14,26 @@
             </form>
         </div>
     </div>
+    {% if search_results %}
+    <div class="card bg-light">
+        <div class="card-body">
+
+            <div class="row">
+                {% for result in search_results %}
+                <div class="col-md-4 mb-5">
+                    <div class="row">
+                        <h4>{{ result.playlist_name }}</h4>
+                    </div>
+                    <div class="row p-2">
+                        <img class="img-thumbnail" src="{{ result.playlist_image }}"
+                            alt="Playlist cover image for {{ result.playlist_name }} - taken from Spotify">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
 </div>
-{% if search_results %}
-<h1>worked</h1>
-{% endif %}
 {% endblock content %}
