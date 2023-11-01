@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from .models import Season, Comment, CommentReply
@@ -66,6 +66,14 @@ class CommentCreateView(CreateView):
         form.instance.season = season
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
+    
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    fields = ['body']
     
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
