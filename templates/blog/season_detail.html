@@ -77,13 +77,20 @@
 
                                 {% if user == comment.user %}
                                 <!-- Delete button - triggers confirmationModal -->
-                                <a class="d-flex justify-content-end" data-comment-id="{{ comment.id }}"
-                                    data-bs-toggle="modal" data-bs-target="#modal{{ comment.id }}">
-                                    <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+                                <div class="row">
+                                    <div class="col-9"></div>
+                                    <div class="col-1">
+                                        <a class="edit-comment" data-comment-id="{{ comment.id }}">
+                                            <i class="fa-solid fa-pen"></i></a>
+                                    </div>
+                                    <div class="col-1">
+                                        <a data-comment-id="{{ comment.id }}" data-bs-toggle="modal"
+                                            data-bs-target="#modal{{ comment.id }}">
+                                            <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+                                    </div>
+                                </div>
 
                                 <!-- Edit button - toggles d-none between 'commentDiv' and 'editCommentDiv' -->
-                                <a class="d-flex justify-content-end edit-comment" data-comment-id="{{ comment.id }}">
-                                    <i class="fa-solid fa-pen"></i></a>
                                 {% endif %}
 
                                 <!-- Reply form - inline JavaScript injection when clicked -->
