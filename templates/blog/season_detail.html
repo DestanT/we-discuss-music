@@ -71,13 +71,13 @@
                             </div>
 
                             <!-- commentDiv -->
-                            <div class="flex-grow-1 ms-3">
+                            <div class="flex-grow-1 ms-3" id="comment{{ comment.id }}">
                                 <div class="fw-bold">{{ comment.user }}</div>
                                 {{ comment.body }}
 
                                 {% if user == comment.user %}
                                 <!-- Delete button - triggers confirmationModal -->
-                                <a class="d-flex justify-content-end edit-comment" data-comment-id="{{ comment.id }}"
+                                <a class="d-flex justify-content-end" data-comment-id="{{ comment.id }}"
                                     data-bs-toggle="modal" data-bs-target="#modal{{ comment.id }}">
                                     <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
 
@@ -88,8 +88,10 @@
 
                                 <!-- Reply form - inline JavaScript injection when clicked -->
                                 {% if user.is_authenticated %}
-                                <a class="d-flex justify-content-end reply-link" data-comment-id="{{ comment.id }}"
-                                    data-comment-user="{{ comment.user }}">reply</a>
+                                <div>
+                                    <a class="reply-link" data-comment-id="{{ comment.id }}"
+                                        data-comment-user="{{ comment.user }}">reply</a>
+                                </div>
                                 {% endif %}
 
                                 <!-- Replies -->
@@ -289,7 +291,7 @@
 
                 // comment.id from data- attribute
                 let commentId = button.getAttribute("data-comment-id");
-                let commentDiv = button.parentElement;
+                let commentDiv = document.getElementById(`comment${commentId}`)
                 let editCommentDiv = document.getElementById(`edit-comment${commentId}`);
 
                 // Hide the comment itself and replace with the update form
