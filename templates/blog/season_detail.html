@@ -60,7 +60,7 @@
                                     alt="...">
                             </div>
 
-                            <!-- EditCommentForm - initially hidden - replaces the comment itself (below) when active -->
+                            <!-- editCommentDiv - initially hidden - replaces the comment itself (below) when active -->
                             <div class="flex-grow-1 ms-3 d-none" id="edit-comment{{ comment.id }}">
                                 <div class="fw-bold">{{ comment.user }}</div>
                                 <form method="post" action="{% url 'update_comment' slug=season.slug pk=comment.id %}">
@@ -70,13 +70,18 @@
                                 </form>
                             </div>
 
-                            <!-- Comment -->
+                            <!-- commentDiv -->
                             <div class="flex-grow-1 ms-3">
                                 <div class="fw-bold">{{ comment.user }}</div>
                                 {{ comment.body }}
 
-                                <!-- Edit comment button - removes toggles d-none on 'Comment' and 'EditCommentForm' -->
                                 {% if user == comment.user %}
+                                <!-- Delete button - triggers confirmationModal -->
+                                <a class="d-flex justify-content-end edit-comment" data-comment-id="{{ comment.id }}"
+                                    data-bs-toggle="modal" data-bs-target="#modal{{ comment.id }}">
+                                    <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+
+                                <!-- Edit button - toggles d-none between 'commentDiv' and 'editCommentDiv' -->
                                 <a class="d-flex justify-content-end edit-comment" data-comment-id="{{ comment.id }}">
                                     <i class="fa-solid fa-pen"></i></a>
                                 {% endif %}
@@ -102,6 +107,34 @@
                                 {% endfor %}
                             </div>
                         </div>
+
+                        <!-- Delete confirmationModal -->
+                        <form method="post" action="{% url 'delete_comment' slug=season.slug pk=comment.id %}">
+                            {% csrf_token %}
+                            <div class="modal fade" id="modal{{ comment.id }}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmationModal"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="confirmationModal">Delete
+                                                comment?
+                                            </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            You cannot undo this action.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         {% endfor %}
 
                         <!-- Sticky comment form-->
