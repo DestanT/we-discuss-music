@@ -1,12 +1,12 @@
 from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from .models import Season, Comment, CommentReply
@@ -74,6 +74,13 @@ class CommentCreateView(CreateView):
 class CommentUpdateView(UpdateView):
     model = Comment
     fields = ['body']
+    
+    def get_success_url(self):
+        return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
+    
+
+class CommentDeleteView(DeleteView):
+    model = Comment
     
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})

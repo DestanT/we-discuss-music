@@ -8,4 +8,5 @@ urlpatterns = [
     path("<slug:slug>/comment", login_required(views.CommentCreateView.as_view()), name="season_comment"),
     path("<slug:slug>/<int:id>/reply", login_required(views.ReplyCreateView.as_view()), name="comment_reply"),
     path("<slug:slug>/<int:pk>/update", login_required(views.CommentUpdateView.as_view()), name="update_comment"),
+    path("<slug:slug>/<int:pk>/delete", login_required(views.CommentDeleteView.as_view()), name="delete_comment"),
 ]
