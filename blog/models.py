@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
+class SpotifyPlaylist(models.Model):
+    playlist_id = models.CharField(max_length=100, primary_key=True)
+    image = CloudinaryField('image', default='placeholder')
+    name = models.CharField(max_length=100)
+    external_url = models.URLField(max_length=100)
+    
+    
 # Credit: CI 'Django Blog' walkthrough project
 class Season(models.Model):
     title = models.CharField(max_length=100, unique=True)
@@ -11,6 +18,7 @@ class Season(models.Model):
     image = CloudinaryField('image', default='palceholder')
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='seasons')
     created_on = models.DateTimeField(auto_now_add=True)
+    playlists = models.ManyToManyField(SpotifyPlaylist, blank=True, related_name='seasons')
 
     class Meta:
         ordering = ['-created_on']
@@ -19,7 +27,7 @@ class Season(models.Model):
     def __str__(self):
         return self.title
     
-    
+
 # Credit: CI 'Django Blog' walkthrough project
 class Comment(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='comments')

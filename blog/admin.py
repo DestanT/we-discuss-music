@@ -13,6 +13,12 @@ class SeasonAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+@admin.register(SpotifyPlaylist)
+class SpotifyPlaylistAdmin(admin.ModelAdmin):
+    list_display = ('playlist_id', 'name', 'external_url')
+    search_fields = ['playlist_id', 'name']
+
+
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
