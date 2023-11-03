@@ -17,4 +17,4 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
             })
     };
     IFrameAPI.createController(element, options, callback);
-};  
+};
