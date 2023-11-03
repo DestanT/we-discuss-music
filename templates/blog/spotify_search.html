@@ -19,7 +19,8 @@
         <div class="card-body">
 
             <div class="row">
-                {% for result in search_results %}
+                <!-- Playlists search -->
+                {% for result in search_results.playlists %}
                 <div class="col-md-4 mb-5">
                     <div class="row">
                         <h4>{{ result.playlist_name }}</h4>
@@ -28,6 +29,20 @@
                         <button class="spotify-iframe" data-spotify-id="spotify:playlist:{{ result.playlist_id }}">
                             <img class="img-thumbnail" src="{{ result.playlist_image }}"
                                 alt="Playlist cover image for {{ result.playlist_name }} - taken from Spotify">
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Albums search -->
+                {% for result in search_results.albums %}
+                <div class="col-md-4 mb-5">
+                    <div class="row">
+                        <h4>{{ result.album_name }}</h4>
+                    </div>
+                    <div class="row p-2">
+                        <button class="spotify-iframe" data-spotify-id="spotify:album:{{ result.album_id }}">
+                            <img class="img-thumbnail" src="{{ result.album_image }}"
+                                alt="Playlist cover image for {{ result.album_name }} - taken from Spotify">
                         </button>
                     </div>
                 </div>
