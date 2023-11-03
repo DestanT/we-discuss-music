@@ -53,29 +53,54 @@ def search_for_item(access_token, item, params):
 
     
     json_data = json.loads(results.content)
-    json_results = json_data['playlists']['items']        
 
-    all_playlists = []
+    all_data = {
+        'playlists': [],
+        'albums': [],
+    }
 
-    for playlist in json_results:
-        playlist_id = playlist['id']
-        playlist_name = playlist['name']
-        playlist_image = playlist['images'][0]['url']
+    if 'playlist' in params:
+        json_playlists = json_data['playlists']['items']
 
-        all_playlists.append(
-            {
-                'playlist_id': playlist_id,
-                'playlist_name': playlist_name,
-                'playlist_image': playlist_image,
-            }
-        )
+        for playlist in json_playlists:
+            playlist_id = playlist['id']
+            playlist_name = playlist['name']
+            playlist_image = playlist['images'][0]['url']
+            playlist_url = playlist['external_urls']['spotify']
 
-    return all_playlists
+            all_data['playlists'].append(
+                {
+                    'playlist_id': playlist_id,
+                    'playlist_name': playlist_name,
+                    'playlist_image': playlist_image,
+                    'playlist_url': playlist_url,
+                }
+            )
+
+    if 'album' in params:
+        json_albums = json_data['albums']['items']
+
+        for album in json_albums:
+            album_id = album['id']
+            album_name = album['name']
+            album_image = album['images'][0]['url']
+            album_url = album['external_urls']['spotify']
+
+            all_data['albums'].append(
+                {
+                    'album_id': album_id,
+                    'album_name': album_name,
+                    'album_image': album_image,
+                    'album_url': album_url,
+                }
+            )
+
+    return all_data
     
 
-# access_token = get_access_token()
-# item = 'Rocket League!'
-# params = 'playlist,album'
-# search_results = search_for_item(access_token, item, params)
+access_token = get_access_token()
+item = 'Rocket League!'
+params = 'playlist,album'
+search_results = search_for_item(access_token, item, params)
 
-# print(search_results)
+print(search_results)
