@@ -23,9 +23,10 @@ class Season(models.Model):
 class SpotifyPlaylist(models.Model):
     playlist_id = models.CharField(max_length=100, primary_key=True)
     seasons = models.ManyToManyField(Season, blank=True, related_name='playlists')
-    image = CloudinaryField('image', default='placeholder')
+    image = models.URLField(max_length=200)
     name = models.CharField(max_length=100)
     external_url = models.URLField(max_length=100)
+    iframe_uri = models.CharField(max_length=100)
     
     
 # Credit: CI 'Django Blog' walkthrough project
