@@ -54,26 +54,25 @@ def search_for_item(access_token, item, params):
     
     json_data = json.loads(results.content)
 
-    all_data = {
-        'playlists': [],
-        'albums': [],
-    }
+    all_data = []
 
     if 'playlist' in params:
         json_playlists = json_data['playlists']['items']
 
         for playlist in json_playlists:
-            playlist_id = playlist['id']
-            playlist_name = playlist['name']
-            playlist_image = playlist['images'][0]['url']
-            playlist_url = playlist['external_urls']['spotify']
+            id = playlist['id']
+            name = playlist['name']
+            image = playlist['images'][0]['url']
+            external_url = playlist['external_urls']['spotify']
+            iframe_uri = playlist['uri']
 
-            all_data['playlists'].append(
+            all_data.append(
                 {
-                    'playlist_id': playlist_id,
-                    'playlist_name': playlist_name,
-                    'playlist_image': playlist_image,
-                    'playlist_url': playlist_url,
+                    'id': id,
+                    'name': name,
+                    'image': image,
+                    'external_url': external_url,
+                    'iframe_uri': iframe_uri,
                 }
             )
 
@@ -81,17 +80,19 @@ def search_for_item(access_token, item, params):
         json_albums = json_data['albums']['items']
 
         for album in json_albums:
-            album_id = album['id']
-            album_name = album['name']
-            album_image = album['images'][0]['url']
-            album_url = album['external_urls']['spotify']
+            id = album['id']
+            name = album['name']
+            image = album['images'][0]['url']
+            external_url = album['external_urls']['spotify']
+            iframe_uri = album['uri']
 
-            all_data['albums'].append(
+            all_data.append(
                 {
-                    'album_id': album_id,
-                    'album_name': album_name,
-                    'album_image': album_image,
-                    'album_url': album_url,
+                    'id': id,
+                    'name': name,
+                    'image': image,
+                    'external_url': external_url,
+                    'iframe_uri': iframe_uri,
                 }
             )
 

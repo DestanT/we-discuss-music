@@ -18,31 +18,17 @@
     <div class="card bg-light">
         <div class="card-body">
 
+            <!-- All results - Albums and or Playlists -->
             <div class="row">
-                <!-- Playlists search -->
-                {% for result in search_results.playlists %}
+                {% for result in search_results %}
                 <div class="col-md-4 mb-5">
                     <div class="row">
-                        <h4>{{ result.playlist_name }}</h4>
+                        <h4>{{ result.name }}</h4>
                     </div>
                     <div class="row p-2">
-                        <button class="spotify-iframe" data-spotify-id="spotify:playlist:{{ result.playlist_id }}">
-                            <img class="img-thumbnail" src="{{ result.playlist_image }}"
-                                alt="Playlist cover image for {{ result.playlist_name }} - taken from Spotify">
-                        </button>
-                    </div>
-                </div>
-                {% endfor %}
-                <!-- Albums search -->
-                {% for result in search_results.albums %}
-                <div class="col-md-4 mb-5">
-                    <div class="row">
-                        <h4>{{ result.album_name }}</h4>
-                    </div>
-                    <div class="row p-2">
-                        <button class="spotify-iframe" data-spotify-id="spotify:album:{{ result.album_id }}">
-                            <img class="img-thumbnail" src="{{ result.album_image }}"
-                                alt="Playlist cover image for {{ result.album_name }} - taken from Spotify">
+                        <button class="spotify-iframe" data-spotify-id="{{ result.iframe_uri }}">
+                            <img class="img-thumbnail" src="{{ result.image }}"
+                                alt="Playlist cover image for {{ result.name }} - taken from Spotify">
                         </button>
                     </div>
                 </div>
@@ -54,3 +40,9 @@
     {% endif %}
 </div>
 {% endblock content %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}
