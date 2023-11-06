@@ -7,7 +7,7 @@ class TestUrls(SimpleTestCase):
 
     def test_homepage_url_resolves(self):
         url = reverse('homepage')
-        self.assertEquals(resolve(url).func.view_class, SeasonList)
+        self.assertEquals(resolve(url).func.view_class, SeasonListView)
 
     def test_create_season_url_resolves(self):
         url = reverse('create_season')
