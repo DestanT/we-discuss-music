@@ -20,7 +20,9 @@ class TestSeasonForm(TestCase):
         self.assertEqual(form.errors['description'][0], 'This field is required.')
 
     def test_season_title_is_unique(self):
-        Season.objects.create(title = 'The same title', slug = 'the-same-title', description = 'anything')
+        # Create object
+        Season.objects.create(title='The same title', slug='the-same-title', description='anything')
+        # Fill form with the same 'title' as object created
         form = SeasonForm({'title': 'The same title', 'slug': 'the-same-title', 'description': 'anything'})
         
         self.assertFalse(form.is_valid())
@@ -43,3 +45,10 @@ class TestSeasonForm(TestCase):
         form = SeasonForm()
         
         self.assertEqual(form.Meta.fields, ('title', 'description', 'image'))
+
+    def test_labels_display_correctly(self):
+        form = SeasonForm()
+
+        self.assertEqual(form.Meta.labels['title'], 'Season Title')
+        self.assertEqual(form.Meta.labels['description'], 'Write a short description')
+        self.assertEqual(form.Meta.labels['image'], 'Add a cover image')
