@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
@@ -30,7 +31,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [os.environ.get('LOCAL_HOST'), 'we-rate-music-simplified-c7886543742e.herokuapp.com']
-
 
 # Application definition
 
@@ -103,7 +103,6 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = 'we_rate_music.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -114,9 +113,19 @@ WSGI_APPLICATION = 'we_rate_music.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-}
+# CREDIT: https://stackoverflow.com/questions/4650509/different-db-for-testing-in-django
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -136,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -147,7 +155,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
