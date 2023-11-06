@@ -14,7 +14,7 @@ from .forms import SeasonForm, CommentForm, CommentReplyForm, SpotifyApiForm
 from .spotify_api import get_access_token, search_for_item
 
 
-class SeasonList(ListView):
+class SeasonListView(ListView):
     model = Season
     queryset = Season.objects.all().order_by('-created_on')
     template_name = 'index.html'
