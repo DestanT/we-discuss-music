@@ -99,9 +99,9 @@ def search_for_item(access_token, item, params):
     return all_data
     
 
-access_token = get_access_token()
-item = 'Rocket League!'
-params = 'playlist,album'
-search_results = search_for_item(access_token, item, params)
+# access_token = get_access_token()
+# item = 'Rocket League!'
+# params = 'playlist,album'
+# search_results = search_for_item(access_token, item, params)
 
-print(search_results)
+# print(search_results)
