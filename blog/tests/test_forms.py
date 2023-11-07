@@ -1,6 +1,8 @@
 from django.test import TestCase
-from blog.forms import SeasonForm
-from blog.models import Season
+from django.forms import Textarea
+from blog.forms import SeasonForm, CommentForm
+from blog.models import Season, Comment
+from django.contrib.auth.models import User
 
 
 class TestSeasonForm(TestCase):
@@ -41,14 +43,52 @@ class TestSeasonForm(TestCase):
         self.assertIn('title', form.errors.keys())
         self.assertIn('description', form.errors.keys())
 
-    def test_fields_are_explicit_in_form_metaclass(self):
+    def test_season_form_fields_are_explicit_in_form_metaclass(self):
         form = SeasonForm()
         
         self.assertEqual(form.Meta.fields, ('title', 'description', 'image'))
 
-    def test_labels_display_correctly(self):
+    def test_season_form_labels_display_correctly(self):
         form = SeasonForm()
 
         self.assertEqual(form.Meta.labels['title'], 'Season Title')
         self.assertEqual(form.Meta.labels['description'], 'Write a short description')
         self.assertEqual(form.Meta.labels['image'], 'Add a cover image')
+
+
+class TestCommentForm(TestCase):
+
+    def test_comment_body_is_required(self):
+        form = CommentForm({'body': ''})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('body', form.errors.keys())
+        self.assertEqual(form.errors['body'][0], 'This field is required.')
+
+    def test_comment_form_is_valid(self):
+        form = CommentForm({'body': 'Some comment'})
+
+        self.assertTrue(form.is_valid())
+
+    def test_comment_form_body_is_larger_than_300(self):
+        form = CommentForm({'body': 'x' * 301})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('body', form.errors.keys())
+        self.assertEqual(form.errors['body'][0], 'Ensure this value has at most 300 characters (it has 301).')
+
+    def test_comment_form_fields_are_explicit_in_form_metaclass(self):
+        form = CommentForm()
+        
+        self.assertEqual(form.Meta.fields, ('body',))
+
+    def test_comment_form_labels_display_correctly(self):
+        form = CommentForm()
+
+        self.assertEqual(form.Meta.labels['body'], '')
+
+    def test_comment_form_widgets_are_set_correctly(self):
+        form = CommentForm()
+
+        self.assertIsInstance(form.Meta.widgets['body'], Textarea)
+        self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a comment...',})
