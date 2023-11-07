@@ -1,0 +1,85 @@
+{% for comment in comments %}
+<div class="d-flex mb-4">
+
+    <!-- User's profile image -->
+    <div class="flex-shrink-0">
+        <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+    </div>
+
+    <!-- editCommentDiv - initially hidden - replaces the comment itself (below) when active -->
+    <div class="flex-grow-1 ms-3 d-none" id="edit-comment{{ comment.id }}">
+        <div class="fw-bold">{{ comment.user }}</div>
+        <form method="post" action="{% url 'update_comment' slug=season.slug pk=comment.id %}">
+            {% csrf_token %}
+            <textarea name="body" rows="3" style="width: 100%;">{{ comment.body }}</textarea>
+            <button type="submit" class="btn btn-outline-success">Update</button>
+        </form>
+    </div>
+
+    <!-- commentDiv -->
+    <div class="flex-grow-1 ms-3" id="comment{{ comment.id }}">
+        <div class="fw-bold">{{ comment.user }}</div>
+        {{ comment.body }}
+
+        {% if user == comment.user %}
+        <!-- Delete button - triggers confirmationModal -->
+        <div class="row">
+            <div class="col-9"></div>
+            <div class="col-1">
+                <a class="edit-comment" data-comment-id="{{ comment.id }}">
+                    <i class="fa-solid fa-pen"></i></a>
+            </div>
+            <div class="col-1">
+                <a data-comment-id="{{ comment.id }}" data-bs-toggle="modal" data-bs-target="#modal{{ comment.id }}">
+                    <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Reply form - inline JavaScript injection when clicked -->
+        {% if user.is_authenticated %}
+        <div>
+            <a class="reply-link" data-comment-id="{{ comment.id }}" data-comment-user="{{ comment.user }}">reply</a>
+        </div>
+        {% endif %}
+
+        <!-- Replies -->
+        {% for reply in comment.replies.all %}
+        <div class="d-flex mt-3">
+            <div class="flex-shrink-0">
+                <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <div class="fw-bold">{{ reply.user }}</div>
+                {{ reply.body }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Delete confirmationModal -->
+<form method="post" action="{% url 'delete_comment' slug=season.slug pk=comment.id %}">
+    {% csrf_token %}
+    <div class="modal fade" id="modal{{ comment.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="confirmationModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmationModal">Delete
+                        comment?
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You cannot undo this action.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endfor %}
