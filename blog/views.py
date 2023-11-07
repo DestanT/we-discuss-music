@@ -35,6 +35,8 @@ class SeasonDetailView(DetailView):
     # Add forms to context data
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        season = context['season']
+        context['comments'] = Comment.objects.filter(season=season)
         context['comment_form'] = CommentForm()
         context['reply_form'] = CommentReplyForm()
         return context
