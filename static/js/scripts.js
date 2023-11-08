@@ -41,50 +41,26 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 const pathArray = window.location.pathname.split("/");
                 const seasonSlug = pathArray[pathArray.length - 2];
 
-                // comment.id and comment.user from data- attribute
+                // comment.id and comment.user from data- attribute in comments.html 'reply' link
                 let commentId = link.getAttribute("data-comment-id");
                 let commentUser = link.getAttribute("data-comment-user");
-
-                // Set URL accordingly
-                let url = `/season/${seasonSlug}/${commentId}/reply`;
 
                 // Hide commentForm and display replyForm instead
                 const replyFormDiv = document.getElementById("reply-form");
                 const commentFormDiv = document.getElementById("comment-form");
                 commentFormDiv.classList.add("d-none");
                 replyFormDiv.classList.remove("d-none");
+                
+                // Set innerHTML 'replying to {commentUser}'
+                const replyingTo = document.getElementById("js-injection-replying-to");
+                replyingTo.innerHTML = `replying to ${commentUser}`;
+                
+                // Set reply form action URL
+                const replyForm = document.getElementById("js-injection-reply-form");
+                let url = `/season/${seasonSlug}/${commentId}/reply`;
+                replyForm.action = url;
 
-                // Custom innerHTML for replyForm
-                replyFormDiv.innerHTML = `
-                <div class="row">
-                    <div class="col">
-                        replying to ${commentUser}
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-sm btn-close" id="close-reply-form" aria-label="Close"></button>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="flex-shrink-0 mt-2">
-                        <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <form method="post" action="${url}" class="mt-3">
-                            {% csrf_token %}
-                            <div class="row d-flex g-0">
-                                <div class="col">
-                                    {{ reply_form | crispy }}
-                                </div>
-                                <div class="col-auto">
-                                    <button type="submit" class="btn btn-outline-success">Reply</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                `;
-
-                // Close replyForm and display the default commentForm again
+                // Close button - close replyForm and display the default commentForm again
                 const closeReplyFormButton = document.getElementById("close-reply-form");
                 closeReplyFormButton.addEventListener("click", function (e) {
                     replyFormDiv.classList.add("d-none");
