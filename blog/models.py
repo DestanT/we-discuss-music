@@ -46,7 +46,7 @@ class Comment(models.Model):
 class CommentReply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
-    body = models.TextField(blank=False)
+    body = models.TextField(blank=False, max_length=300)
     created_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
