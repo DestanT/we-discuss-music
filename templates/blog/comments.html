@@ -37,11 +37,9 @@
         {% endif %}
 
         <!-- Reply form - inline JavaScript injection when clicked -->
-        {% if user.is_authenticated %}
         <div>
             <a class="reply-link" data-comment-id="{{ comment.id }}" data-comment-user="{{ comment.user }}">reply</a>
         </div>
-        {% endif %}
 
         <!-- Replies -->
         {% for reply in comment.replies.all %}
