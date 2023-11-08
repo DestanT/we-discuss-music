@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.forms import Textarea
-from blog.forms import SeasonForm, CommentForm
+from blog.forms import SeasonForm, CommentForm, CommentReplyForm
 from blog.models import Season, Comment
 from django.contrib.auth.models import User
 
@@ -70,7 +70,7 @@ class TestCommentForm(TestCase):
 
         self.assertTrue(form.is_valid())
 
-    def test_comment_form_body_is_larger_than_300(self):
+    def test_comment_form_body_when_larger_than_300_characters(self):
         form = CommentForm({'body': 'x' * 301})
 
         self.assertFalse(form.is_valid())
@@ -92,3 +92,44 @@ class TestCommentForm(TestCase):
 
         self.assertIsInstance(form.Meta.widgets['body'], Textarea)
         self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a comment...',})
+
+    
+class TestCommentReplyForm(TestCase):
+    '''
+    Tests are identical to TestCommentForm
+    '''
+
+    def test_reply_body_is_required(self):
+        form = CommentReplyForm({'body': ''})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('body', form.errors.keys())
+        self.assertEqual(form.errors['body'][0], 'This field is required.')
+
+    def test_reply_form_is_valid(self):
+        form = CommentReplyForm({'body': 'Some comment'})
+
+        self.assertTrue(form.is_valid())
+
+    def test_reply_form_body_when_larger_than_300_characters(self):
+        form = CommentReplyForm({'body': 'x' * 301})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('body', form.errors.keys())
+        self.assertEqual(form.errors['body'][0], 'Ensure this value has at most 300 characters (it has 301).')
+
+    def test_reply_form_fields_are_explicit_in_form_metaclass(self):
+        form = CommentReplyForm()
+        
+        self.assertEqual(form.Meta.fields, ('body',))
+
+    def test_reply_form_labels_display_correctly(self):
+        form = CommentReplyForm()
+
+        self.assertEqual(form.Meta.labels['body'], '')
+
+    def test_reply_form_widgets_are_set_correctly(self):
+        form = CommentReplyForm()
+
+        self.assertIsInstance(form.Meta.widgets['body'], Textarea)
+        self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a reply...',})
