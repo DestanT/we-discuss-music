@@ -47,15 +47,15 @@
                     <!-- Comments -->
                     {% include 'blog/comments.html' %}
 
-                    <!-- Comment form for logged in users -->
+                    <!-- Sticky comment form -->
                     {% if user.is_authenticated %}
                     {% include 'blog/comment_form.html' %}
                     {% endif %}
 
-                    <!-- Sticky reply form-->
-                    <div class="sticky-bottom blurry-overlay d-none" id="reply-form">
-                        <!-- Inline JavaScript injection -->
-                    </div>
+                    <!-- Sticky reply form -->
+                    {% if user.is_authenticated %}
+                    {% include 'blog/reply_form.html' %}
+                    {% endif %}
 
                 </div>
             </div>
