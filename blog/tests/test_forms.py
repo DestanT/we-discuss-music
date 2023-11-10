@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.forms import Textarea
-from blog.forms import SeasonForm, CommentForm, CommentReplyForm
+from blog.forms import SeasonForm, CommentForm, CommentReplyForm, SpotifyApiForm
 from blog.models import Season, Comment
 from django.contrib.auth.models import User
 
@@ -8,14 +8,20 @@ from django.contrib.auth.models import User
 class TestSeasonForm(TestCase):
 
     def test_season_title_is_required(self):
-        form = SeasonForm({'title': '', 'description': 'anything'})
+        form = SeasonForm({
+            'title': '',
+            'description': 'anything'
+            })
 
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors.keys())
         self.assertEqual(form.errors['title'][0], 'This field is required.')
 
     def test_season_description_is_required(self):
-        form = SeasonForm({'title': 'anything', 'description': ''})
+        form = SeasonForm({
+            'title': 'anything',
+            'description': ''
+            })
 
         self.assertFalse(form.is_valid())
         self.assertIn('description', form.errors.keys())
@@ -23,16 +29,28 @@ class TestSeasonForm(TestCase):
 
     def test_season_title_is_unique(self):
         # Create object
-        Season.objects.create(title='The same title', slug='the-same-title', description='anything')
+        Season.objects.create(
+            title='The same title',
+            slug='the-same-title',
+            description='anything'
+        )
         # Fill form with the same 'title' as object created
-        form = SeasonForm({'title': 'The same title', 'slug': 'the-same-title', 'description': 'anything'})
+        form = SeasonForm({
+            'title': 'The same title',
+            'slug': 'the-same-title',
+            'description': 'something'
+            })
         
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors.keys())
         self.assertEqual(form.errors['title'][0], 'Season with this Title already exists.')
 
     def test_season_form_is_valid(self):
-        form = SeasonForm({'title': 'New Season', 'slug': 'new-season', 'description': 'Some description'})
+        form = SeasonForm({
+            'title': 'New Season',
+            'slug': 'new-season',
+            'description': 'Some description'
+            })
 
         self.assertTrue(form.is_valid())
 
@@ -133,3 +151,38 @@ class TestCommentReplyForm(TestCase):
 
         self.assertIsInstance(form.Meta.widgets['body'], Textarea)
         self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a reply...',})
+
+
+class TestSpotifyApiForm(TestCase):
+
+    def test_search_field_is_required(self):
+        form = SpotifyApiForm({'search': ''})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('search', form.errors.keys())
+        self.assertEqual(form.errors['search'][0], 'This field is required.')
+
+    def test_params_field_is_required(self):
+        form = SpotifyApiForm({'search': 'Some search'})
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('params', form.errors.keys())
+        self.assertEqual(form.errors['params'][0], 'This field is required.')
+
+    def test_form_is_valid_with_one_param_selected(self):
+        param1 = ['album']
+        form1 = SpotifyApiForm({'search': 'Some search', 'params': param1})
+        param2 = ['playlist']
+        form2 = SpotifyApiForm({'search': 'Some search', 'params': param2})
+
+        self.assertTrue(form1.is_valid())
+        self.assertTrue(form2.is_valid())
+
+    def test_form_is_valid_with_both_params_selected(self):
+        both_params = ['album', 'playlist']
+        form1 = SpotifyApiForm({'search': 'Some search', 'params': both_params})
+        reversed_params = ['playlist', 'album']
+        form2 = SpotifyApiForm({'search': 'Some search', 'params': reversed_params})
+
+        self.assertTrue(form1.is_valid())
+        self.assertTrue(form2.is_valid())
