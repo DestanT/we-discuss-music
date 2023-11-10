@@ -10,6 +10,7 @@ class TestViews(TestCase):
     def setUp(self):
         self.client = Client()
         self.test_user = User.objects.create(username='testUser')
+        self.staff_member = User.objects.create(username='staffMember', is_staff=True)
         self.season = Season.objects.create(
             title='Test Title',
             slug='test-title',
@@ -100,10 +101,53 @@ class TestViews(TestCase):
 
         self.assertIsInstance(response.context['reply_form'], CommentReplyForm)
 
+    # Tests for SeasonCreateView:
+    def test_season_create_view_staff_member_is_required(self):
+        self.client.force_login(self.test_user)
+        response = self.client.get(reverse('create_season'))
 
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/admin/login/?next=/season/create/')
+    
+    def test_season_create_view_status_code_is_200_when_staff_member_is_logged_in(self):
+        self.client.force_login(self.staff_member)
+        response = self.client.get(reverse('create_season'))
 
-    # def test_season_create_view_POST(self):
-    #     pass
+        self.assertEqual(response.status_code, 200)
+
+    def test_season_create_view_uses_correct_template(self):
+        self.client.force_login(self.staff_member)
+        response = self.client.get(reverse('create_season'))
+
+        self.assertTemplateUsed(response, 'blog/create_season.html')
+
+    def test_season_create_view_creates_new_season_object(self):
+        self.client.force_login(self.staff_member)
+        form_data = {'title': 'New Season Object', 'description': 'Some description'}
+        response = self.client.post(reverse('create_season'), data=form_data)
+
+        # SetUp creates 2 seasons, +1 = 3
+        self.assertEqual(Season.objects.count(), 3)
+
+    def test_season_create_view_form_valid_method_sets_slug_and_author_correctly(self):
+        self.client.force_login(self.staff_member)
+        form_data = {'title': 'New Season Object', 'description': 'Some description'}
+        self.client.post(reverse('create_season'), data=form_data)
+        new_season = Season.objects.first()
+
+        self.assertEqual(new_season.slug, 'new-season-object') # type: ignore
+        self.assertEqual(new_season.author, self.staff_member) # type: ignore
+
+    def test_season_create_view_get_success_url_method_successfully_redirects(self):
+        self.client.force_login(self.staff_member)
+        form_data = {'title': 'New Season Object', 'description': 'Some description'}
+        response = self.client.post(reverse('create_season'), data=form_data)
+        new_season = Season.objects.first()
+        success_url = reverse('season_detail', kwargs={'slug': new_season.slug}) # type: ignore
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, success_url)
+
 
     # def test_comment_create_view_POST(self):
     #     pass
