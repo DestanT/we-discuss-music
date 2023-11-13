@@ -26,7 +26,8 @@
                         <h4>{{ result.name }}</h4>
                     </div>
                     <div class="row p-2">
-                        <button class="spotify-iframe" data-spotify-id="{{ result.iframe_uri }}">
+                        <button class="spotify-iframe" data-spotify-id="{{ result.iframe_uri }}"
+                            data-result-id="{{ result.id }}">
                             <img class="img-thumbnail" src="{{ result.image }}"
                                 alt="Playlist cover image for {{ result.name }} - taken from Spotify">
                         </button>
@@ -37,15 +38,52 @@
 
         </div>
     </div>
-    {% endif %}
+    <!-- Spotify iFrame Embed -->
     <div class="container fixed-bottom d-none">
+        <div>
+            <!-- Button trigger modal -->
+            {% for result in search_results %}
+            <button type="button" class="btn btn-success d-none" id="addPlaylistButton{{ result.id }}"
+                data-bs-toggle="modal" data-bs-target="#addPlaylistModal{{ result.id }}">
+                Add Playlist
+            </button>
+            {% endfor %}
+        </div>
         <div id="embed-iframe"></div>
     </div>
+    <!-- Modal -->
+    {% for result in search_results %}
+    <form method="POST" action="{% url 'add_playlist' slug=season_slug %}">
+        {% csrf_token %}
+        <div class="modal fade" id="addPlaylistModal{{ result.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="addPlaylistModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addPlaylistModalLabel">
+                            Add this playlist?
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>{{ result.name }}</h4>
+                        <img class="img-thumbnail" src="{{ result.image }}"
+                            alt="Playlist cover image for {{ result.name }} - taken from Spotify">
+                        <input type="hidden" name="playlist-id" value="{{ result.id }}">
+                        <input type="hidden" name="image-url" value="{{ result.image }}">
+                        <input type="hidden" name="name" value="{{ result.name }}">
+                        <input type="hidden" name="external-url" value="{{ result.external_url }}">
+                        <input type="hidden" name="iframe-url" value="{{ result.iframe_uri }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Playlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock content %}
-
-{% block script %}
-<script>
-
-</script>
-{% endblock script %}
