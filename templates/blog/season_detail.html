@@ -35,11 +35,23 @@
                     <p class="fs-5 mb-4">{{ season.description }}</p>
                 </section>
                 <section>
-                    {% for playlist in season.playlists.all %}
-                    <h2>
-                        {{ playlist.name }}
-                    </h2>
-                    {% endfor %}
+                    <div class="row">
+                        {% for playlist in season.playlists.all %}
+                        <div class="col-4">
+                            <h2>
+                                {{ playlist.name }}
+                            </h2>
+                            <button class="spotify-iframe" data-spotify-id="{{ playlist.iframe_uri }}">
+                                <img src="{{ playlist.image }}" class="img-thumbnail"
+                                    alt="Playlist cover image for {{ playlist.name }} - Taken from Spotify">
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Spotify iFrame Embed -->
+                    <div class="container fixed-bottom d-none">
+                        <div id="embed-iframe"></div>
+                    </div>
                 </section>
             </article>
         </div>
