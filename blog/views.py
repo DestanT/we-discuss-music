@@ -2,14 +2,14 @@ from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
-from .models import Season, Comment, CommentReply
+from .models import Season, Comment, CommentReply, SpotifyPlaylist
 from .forms import SeasonForm, CommentForm, CommentReplyForm, SpotifyApiForm
 from .spotify_api import get_access_token, search_for_item
 
@@ -113,6 +113,7 @@ class SpotifyApiView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_results = self.request.session.get('search_results', None)
+        context['season_slug'] = self.kwargs.get('slug')
         context['search_results'] = search_results
         return context
 
@@ -130,3 +131,27 @@ class SpotifyApiView(FormView):
 
         return self.render_to_response(self.get_context_data(form=form))
 
+
+class AddPlaylistView(View):
+    def post(self, request, *args, **kwargs):
+        playlist_id = request.POST.get('playlist-id')
+        season = get_object_or_404(Season, slug=self.kwargs.get('slug'))
+        image = request.POST.get('image-url')
+        name = request.POST.get('name')
+        external_url = request.POST.get('external-url')
+        iframe_uri = request.POST.get('iframe-url')
+
+        new_playlist, created = SpotifyPlaylist.objects.get_or_create(
+            playlist_id=playlist_id,
+            image=image,
+            name=name,
+            external_url=external_url,
+            iframe_uri=iframe_uri,
+        )
+
+        new_playlist.seasons.add(season)
+
+        if not created:
+            pass
+
+        return redirect('season_detail', slug=self.kwargs.get('slug'))
