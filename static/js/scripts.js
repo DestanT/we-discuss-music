@@ -9,6 +9,8 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
         const options = {
             width: '100%',
         };
+
+        let previousButton = null;
         
         const callback = (EmbedController) => {
             document.querySelectorAll('.spotify-iframe').forEach(
@@ -16,6 +18,15 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
                     playlist.addEventListener('click', () => {
                         parent.classList.remove('d-none');
                         EmbedController.loadUri(playlist.dataset.spotifyId)
+                        
+                        const addPlaylistButton = document.getElementById(`addPlaylistButton${playlist.dataset.resultId}`);
+                        addPlaylistButton.classList.toggle('d-none');
+                        
+                        // Toggle previousButton off to prevent stacking
+                        if (previousButton) {
+                            previousButton.classList.toggle('d-none');
+                        }
+                        previousButton = addPlaylistButton;
                     });
                 })
             };
