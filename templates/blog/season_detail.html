@@ -23,6 +23,11 @@
                     <a href="{% url 'homepage' %}">
                         <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="...">
                     </a>
+                    {% if user.is_staff %}
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary" href="{% url 'spotify_search' slug=season.slug %}">Add Playlists</a>
+                    </div>
+                    {% endif %}
                 </figure>
                 <!-- Post content-->
                 <section class="mb-5">
