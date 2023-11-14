@@ -8,7 +8,7 @@ class Season(models.Model):
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100)
     description = models.TextField(blank=False)
-    image = CloudinaryField('image', default='palceholder')
+    image = CloudinaryField('image', default='placeholder')
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='seasons')
     created_on = models.DateTimeField(auto_now_add=True)
 
@@ -30,7 +30,7 @@ class SpotifyPlaylist(models.Model):
 
     class Meta:
         verbose_name_plural = 'Spotify Playlists'
-        
+
     
 # Credit: CI 'Django Blog' walkthrough project
 class Comment(models.Model):
