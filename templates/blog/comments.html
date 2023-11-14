@@ -1,11 +1,6 @@
 {% for comment in comments %}
 <div class="d-flex mb-4">
 
-    <!-- User's profile image -->
-    <div class="flex-shrink-0">
-        <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
-    </div>
-
     <!-- editCommentDiv - initially hidden - replaces the comment itself (below) when active -->
     <div class="flex-grow-1 ms-3 d-none" id="edit-comment{{ comment.id }}">
         <div class="fw-bold">{{ comment.user }}</div>
@@ -18,7 +13,9 @@
 
     <!-- commentDiv -->
     <div class="flex-grow-1 ms-3" id="comment{{ comment.id }}">
-        <div class="fw-bold">{{ comment.user }}</div>
+        <div class="fw-bold">{{ comment.user }}
+            {% if comment.user.is_staff %}<em class="fw-lighter">(Admin)</em>{% endif %}
+        </div>
         {{ comment.body }}
 
         {% if user == comment.user %}
@@ -27,27 +24,26 @@
             <div class="col-9"></div>
             <div class="col-1">
                 <a class="edit-comment" data-comment-id="{{ comment.id }}">
-                    <i class="fa-solid fa-pen"></i></a>
+                    <i class="fa-solid fa-pen" style="color: rgb(73, 73, 73);"></i></a>
             </div>
             <div class="col-1">
                 <a data-comment-id="{{ comment.id }}" data-bs-toggle="modal" data-bs-target="#modal{{ comment.id }}">
-                    <i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+                    <i class="fa-solid fa-trash" style="color: rgb(73, 73, 73);"></i></a>
             </div>
         </div>
         {% endif %}
 
         <!-- Reply form - inline JavaScript injection when clicked -->
         <div>
-            <a class="reply-link" data-comment-id="{{ comment.id }}" data-comment-user="{{ comment.user }}">reply</a>
+            <a class="reply-link" data-comment-id="{{ comment.id }}"
+                data-comment-user="{{ comment.user }}"><strong>reply</strong>
+            </a>
         </div>
 
         <!-- Replies -->
         {% for reply in comment.replies.all %}
         <div class="d-flex mt-3">
-            <div class="flex-shrink-0">
-                <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
-            </div>
-            <div class="flex-grow-1 ms-3">
+            <div class="flex-grow-1 ms-5">
                 <div class="fw-bold">{{ reply.user }}</div>
                 {{ reply.body }}
             </div>

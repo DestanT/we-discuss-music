@@ -16,6 +16,14 @@
   backdrop-filter: blur(2px);
 }
 
+.reply-link {
+  text-decoration: none;
+  font-size: smaller;
+  color: rgb(73, 73, 73);
+}
+
+/* StartBootstrap CSS */
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
