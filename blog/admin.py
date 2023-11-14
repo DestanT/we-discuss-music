@@ -15,7 +15,8 @@ class SeasonAdmin(SummernoteModelAdmin):
 
 @admin.register(SpotifyPlaylist)
 class SpotifyPlaylistAdmin(admin.ModelAdmin):
-    list_display = ('playlist_id', 'name', 'external_url')
+    list_display = ('name', 'playlist_id', 'external_url')
+    list_filter = ('seasons',)
     search_fields = ['playlist_id', 'name']
 
 

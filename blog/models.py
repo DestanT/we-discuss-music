@@ -27,7 +27,10 @@ class SpotifyPlaylist(models.Model):
     name = models.CharField(max_length=100)
     external_url = models.URLField(max_length=100)
     iframe_uri = models.CharField(max_length=100)
-    
+
+    class Meta:
+        verbose_name_plural = 'Spotify Playlists'
+        
     
 # Credit: CI 'Django Blog' walkthrough project
 class Comment(models.Model):
@@ -51,7 +54,7 @@ class CommentReply(models.Model):
 
     class Meta:
         ordering = ['created_on']
-        verbose_name_plural = 'Comment Replies'
+        verbose_name_plural = 'Replies'
 
     def __str__(self):
         return self.body
