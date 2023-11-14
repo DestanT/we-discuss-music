@@ -21,7 +21,13 @@
                 <!-- Preview image figure-->
                 <figure class="mb-4">
                     <a href="{% url 'homepage' %}">
-                        <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="...">
+                        {% if "placeholder" in season.image.url %}
+                        <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg"
+                            alt="Placeholder image">
+                        {% else %}
+                        <img class="img-fluid rounded" src="{{ season.image.url }}"
+                            alt="Cover image for season post: {{ season.title }}">
+                        {% endif %}
                     </a>
                     {% if user.is_staff %}
                     <div class="d-grid gap-2">
