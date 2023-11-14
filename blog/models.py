@@ -8,7 +8,7 @@ class Season(models.Model):
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100)
     description = models.TextField(blank=False)
-    image = CloudinaryField('image', default='placeholder', transformation=[{'width':900, 'height':400, 'crop':'auto'}])
+    image = CloudinaryField('image', default='placeholder', transformation=[{'width':1350, 'height':600, 'crop':'auto'}])
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='seasons')
     created_on = models.DateTimeField(auto_now_add=True)
 
