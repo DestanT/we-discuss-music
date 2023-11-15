@@ -7,7 +7,7 @@
         <form method="post" action="{% url 'update_comment' slug=season.slug pk=comment.id %}">
             {% csrf_token %}
             <textarea name="body" rows="3" style="width: 100%;">{{ comment.body }}</textarea>
-            <button type="submit" class="btn btn-outline-success">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 
