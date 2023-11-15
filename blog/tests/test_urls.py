@@ -21,6 +21,10 @@ class TestUrls(SimpleTestCase):
         url = reverse('spotify_search', args=['test-slug'])
         self.assertEquals(resolve(url).func.view_class, SpotifyApiView)
 
+    def test_add_playlist_url_resolves(self):
+        url = reverse('add_playlist', args=['test-slug'])
+        self.assertEquals(resolve(url).func.view_class, AddPlaylistView)
+
     def test_season_comment_url_resolves(self):
         url = reverse('season_comment', args=['test-slug'])
         self.assertEquals(resolve(url).func.view_class, CommentCreateView)
