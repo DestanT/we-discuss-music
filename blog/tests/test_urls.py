@@ -1,5 +1,8 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
+from django.test.client import Client
 from django.urls import reverse, resolve
+from django.contrib.auth.models import User
+from blog.models import Season, Comment
 from blog.views import *
 
 
@@ -40,3 +43,37 @@ class TestUrls(SimpleTestCase):
     def test_delete_comment_url_resolves(self):
         url = reverse('delete_comment', args=['test-slug', '1'])
         self.assertEquals(resolve(url).func.view_class, CommentDeleteView)
+
+
+class TestLoginRequired(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_season_comment_url_login_required_decorator(self):
+        url = reverse('season_comment', kwargs={'slug': 'test-slug'})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f'/accounts/login/?next={url}')
+
+    def test_comment_reply_url_login_required_decorator(self):
+        url = reverse('comment_reply', kwargs={'slug': 'test-slug', 'id': 1})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f'/accounts/login/?next={url}')
+
+    def test_update_comment_url_login_required_decorator(self):
+        url = reverse('update_comment', kwargs={'slug': 'test-slug', 'pk': 1})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f'/accounts/login/?next={url}')
+
+    def test_delete_comment_url_login_required_decorator(self):
+        url = reverse('delete_comment', kwargs={'slug': 'test-slug', 'pk': 1})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f'/accounts/login/?next={url}')
