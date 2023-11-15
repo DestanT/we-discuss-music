@@ -132,6 +132,7 @@ class SpotifyApiView(FormView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class AddPlaylistView(View):
     def post(self, request, *args, **kwargs):
         playlist_id = request.POST.get('playlist-id')
