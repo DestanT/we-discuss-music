@@ -155,8 +155,5 @@ class AddPlaylistView(View):
 
         new_playlist.seasons.add(season)
 
-        if not created:
-            pass
-
         messages.success(self.request, 'Playlist added successfully!')
         return redirect('season_detail', slug=self.kwargs.get('slug'))
