@@ -21,9 +21,12 @@
             <!-- All results - Albums and or Playlists -->
             <div class="row">
                 {% for result in search_results %}
-                <div class="col-md-4 mb-5">
+                <div class="col-md-6 col-lg-4 mb-5">
                     <div class="row">
-                        <h4>{{ result.name }}</h4>
+                        <h5 class="text-truncate mt-5" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="{{ result.name }}">
+                            {{ result.name }}
+                        </h5>
                     </div>
                     <div class="row p-2">
                         <button class="spotify-iframe" data-spotify-id="{{ result.iframe_uri }}"
