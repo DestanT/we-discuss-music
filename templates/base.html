@@ -47,6 +47,15 @@
         {% endblock content %}
     </main>
 
+    <!-- Alert messages -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success fixed-bottom text-center" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">

@@ -99,4 +99,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
             });
         });
     }
+
+    // Event listeners for Bootstrap Alerts
+    let messages = document.querySelectorAll("div.alert");
+    messages.forEach(message => {
+        let alert = new bootstrap.Alert(message);
+        setTimeout(function() {
+            alert.close();
+        }, 2500);
+    });
 });

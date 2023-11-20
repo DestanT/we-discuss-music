@@ -1,12 +1,13 @@
 from typing import Any
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from .models import Season, Comment, CommentReply, SpotifyPlaylist
@@ -78,6 +79,7 @@ class CommentUpdateView(UpdateView):
     fields = ['body']
     
     def get_success_url(self):
+        messages.success(self.request, 'Your comment has been updated')
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
     
 
@@ -85,8 +87,9 @@ class CommentDeleteView(DeleteView):
     model = Comment
     
     def get_success_url(self):
+        messages.success(self.request, 'Your comment has been deleted successfully')
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
-    
+        
 
 class ReplyCreateView(CreateView):
     model = CommentReply
@@ -155,4 +158,5 @@ class AddPlaylistView(View):
         if not created:
             pass
 
+        messages.success(self.request, 'Playlist added successfully!')
         return redirect('season_detail', slug=self.kwargs.get('slug'))
