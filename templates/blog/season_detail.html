@@ -35,18 +35,22 @@
                     </div>
                     {% endif %}
                 </figure>
-                <!-- Post content-->
+
+                <!-- Season post details -->
                 <section class="mb-5">
                     <h2 class="fw-bolder mb-4 mt-5">Description:</h2>
                     <p class="fs-5 mb-4">{{ season.description }}</p>
                 </section>
-                <section>
+
+                <!-- Playlist in Season post -->
+                <section class="container mb-5">
                     <div class="row">
                         {% for playlist in season.playlists.all %}
-                        <div class="col-4">
-                            <h2>
+                        <div class="col-md-6 col-lg-4">
+                            <h5 class="text-truncate mt-5" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="{{ playlist.name }}">
                                 {{ playlist.name }}
-                            </h2>
+                            </h5>
                             <button class="spotify-iframe" data-spotify-id="{{ playlist.iframe_uri }}">
                                 <img src="{{ playlist.image }}" class="img-thumbnail"
                                     alt="Playlist cover image for {{ playlist.name }} - Taken from Spotify">
@@ -54,6 +58,7 @@
                         </div>
                         {% endfor %}
                     </div>
+
                     <!-- Spotify iFrame Embed -->
                     <div class="container fixed-bottom d-none">
                         <div id="embed-iframe"></div>
@@ -63,7 +68,7 @@
         </div>
 
         <!-- Comments section-->
-        <section class="col-lg-4 mb-5">
+        <section class="col-lg-4 mb-lg-5">
             <div class="card bg-light">
                 <div class="card-body">
 
