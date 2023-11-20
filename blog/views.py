@@ -25,6 +25,7 @@ class SeasonListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['latest_season'] = Season.objects.first()
+        context['all_seasons'] = Season.objects.all()
         return context
     
 
