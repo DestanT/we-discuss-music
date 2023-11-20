@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 <!-- Page content-->
-<div class="container mt-5 mb-5">
+<div class="container pt-5 pb-5">
     <div class="row mb-5">
         <div class="col-lg-8">
             <h2>Search Spotify</h2>
@@ -43,7 +43,7 @@
         <div>
             <!-- Button trigger modal -->
             {% for result in search_results %}
-            <button type="button" class="btn btn-success d-none" id="addPlaylistButton{{ result.id }}"
+            <button type="button" class="btn btn-primary d-none" id="addPlaylistButton{{ result.id }}"
                 data-bs-toggle="modal" data-bs-target="#addPlaylistModal{{ result.id }}">
                 Add Playlist
             </button>
