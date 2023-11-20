@@ -100,7 +100,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <ul class="list-unstyled mb-0">
-                                {% for season in season_list %}
+                                {% for season in all_seasons %}
                                 <li><a href="{% url 'season_detail' slug=season.slug %}">{{ season.title }}</a></li>
                                 {% endfor %}
                             </ul>
