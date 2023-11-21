@@ -634,3 +634,6 @@ init-import=no
 # List of qualified module names which can have objects that can redefine
 # builtins.
 redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
+
+# Django settings configuration
+django-settings-module=we_rate_music.settings
