@@ -1,6 +1,6 @@
-from .models import Season, Comment, CommentReply
 from django import forms
 from django.forms import ModelForm, Textarea
+from .models import Season, Comment, CommentReply
 
 
 class SeasonForm(ModelForm):
