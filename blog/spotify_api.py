@@ -1,8 +1,8 @@
 import os
 import sys
 import base64
-from requests import post, get
 import json
+from requests import post, get
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -16,6 +16,12 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET', '')
 # CREDIT - This video got me started with python based Spotify APIs:
 # https://www.youtube.com/watch?v=WAmEZBEeNmg
 def get_access_token():
+    """
+    Gets an access token using CLIENT_ID and CLIENT_SECRET.
+
+    Returns:
+        Access token for Spotify API authentication (str).
+    """
     auth_string = CLIENT_ID + ':' + CLIENT_SECRET
     auth_bytes = auth_string.encode('utf-8')
     auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
@@ -33,10 +39,30 @@ def get_access_token():
 
 
 def get_auth_header(access_token):
+    """
+    Generates authentication header using the provided access token.
+
+    Returns:
+        Authorization header for API request (dict).
+    """
     return {'Authorization': 'Bearer ' + access_token}
 
 
 def search_for_item(access_token, item, params):
+    """
+    Searches for playlists and albums using the Spotify API.
+
+    Returns:
+        A list of dictionaries containing all search results (list)
+        example:
+        [{
+            'id': '...',
+            'name': '...',
+            'image': '...',
+            'external_url': '...',
+            'iframe_uri': '...'
+        }]
+    """
     headers = get_auth_header(access_token)
     query_url = f'https://api.spotify.com/v1/search?q={item}&type={params}'
     results = get(query_url, headers=headers)
@@ -44,14 +70,14 @@ def search_for_item(access_token, item, params):
     if results.status_code == 401:
         access_token = get_access_token()
         return search_for_item(access_token, item, params)
-    
-    elif results.status_code == 429:
+
+    if results.status_code == 429:
         return 'Spotify API limit is reached, please try again later!'
-    
-    elif results.status_code != 200:
+
+    if results.status_code != 200:
         return f'Error: {results.status_code}'
 
-    
+
     json_data = json.loads(results.content)
 
     all_data = []
@@ -97,11 +123,3 @@ def search_for_item(access_token, item, params):
             )
 
     return all_data
-    
-
-# access_token = get_access_token()
-# item = 'Rocket League!'
-# params = 'playlist,album'
-# search_results = search_for_item(access_token, item, params)
-
-# print(search_results)
