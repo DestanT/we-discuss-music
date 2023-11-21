@@ -58,11 +58,11 @@
 <form method="post" action="{% url 'delete_comment' slug=season.slug pk=comment.id %}">
     {% csrf_token %}
     <div class="modal fade" id="modal{{ comment.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="confirmationModal" aria-hidden="true">
+        aria-labelledby="confirmationModal{{ comment.id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="confirmationModal">Delete
+                    <h1 class="modal-title fs-5" id="confirmationModal{{ comment.id }}">Delete
                         comment?
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
