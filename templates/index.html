@@ -70,8 +70,8 @@
                 <ul class="pagination justify-content-center my-4">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"
-                            aria-disabled="true">&laquo; PREV</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">&laquo;
+                            PREV</a>
                     </li>
                     {% endif %}
 
@@ -83,8 +83,7 @@
 
                     {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1"
-                            aria-disabled="true">NEXT &raquo;</a>
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1">NEXT &raquo;</a>
                     </li>
                     {% endif %}
                 </ul>
