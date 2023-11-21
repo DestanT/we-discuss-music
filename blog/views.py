@@ -1,7 +1,4 @@
-from typing import Any
-from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.text import slugify
 from django.views import View
