@@ -1,165 +1,103 @@
-# **We Rate Music**
+# **We Discuss Music**
+
+Welcome to **We Discuss Music** - your go-to blog for passionate music enthusiasts! &#127925;
+
+The platform offers a vibrant hub where music lovers gather to listen and discuss themes curated by our site admins. Through the integrations of the Spotify API, we bring you hand-picked playlists that beautifully complement our posts.
+
+**Explore Music**
+
+As a visitor, discover and explore our diverse array of ever growing posts; each with its own theme, curated playlists and lively user discussions. Thanks to the embedded Spotify player you can even get a taste for and enjoy the playlists directly on our site.
+
+**Join the Conversation**
+
+Register an account with us and join in on the conversations! Share your thoughts, exchange ideas, and talk about your favourite songs with other music aficionados.
+
+To access the live site, you can click [**here**](https://we-rate-music-simplified-c7886543742e.herokuapp.com/).
 
 ## **Table of Contents**
 
-1. [Introduction](#introduction)
-2. [Goals](#goals)
-3. [Django Apps](#django-apps)
-   - [Users](#users)
-   - [Clubs](#clubs)
-   - [Seasons](#seasons)
-4. [Features:](#features)
+1. [Goals](#goals)
+2. [Database Modelling](#database-modelling)
+3. [Features:](#features)
+   - [Season Posts](#season-posts)
    - [Spotify API](#spotify-api)
-   - [User Profile](#user-profile)
-   - [Settings](#settings)
-   - [User Stats](#user-stats)
-   - [Discover Playlists](#discover-playlists)
    - [Add Playlists](#add-playlists)
-   - [View/Create Clubs](#view/create-clubs)
-5. [Future Features/Roadmap](#future-featuresroadmap)
-6. [Testing](#testing)
-7. [Challenges & Bugs](#challenges—bugs)
-8. [Technologies Used](#technologies-used)
-9. [Deployment](#deployment)
-10. [Creating the Heroku app](#creating-the-heroku-app)
-11. [Development](#development)
-12. [Credits](#credits)
-
-## **Introduction**
-
-We Rate Music is a "book club" for music. Inspired by a group of friends and their WhatsApp group. We all enjoy listening to music and spend variying amounts of time discussing the importance of music in our lives, and in the lives of human beings more generally.
-
-Users can form clubs with their friends and within their own clubs create custom themed "seasons". Each season will have a short description, describing what the rules for the season are. Some examples of this may include; "Best for studying" or "Best for a gym workout". Or more interestingly; "each chosen song within the playlist must have an artist featured in the previous chosen song, with the first song being a free choice".
-
-Club members are prompted to make their submissions and the app will roll out the playlists, with their respective spotify links, one by one to its members to listen to and rate out of 10. Once all ratings are gathered the next playlist will be featured.
-
-To access the application, visit the Heroku app [**here**](https://we-rate-music-6240e7e17326.herokuapp.com/).
+4. [Future Features/Roadmap](#future-featuresroadmap)
+5. [Testing](#testing)
+   - [W3C Markup Validation](#w3c-markup-validation)
+   - [W3C CSS Validation](#w3c-css-validation)
+   - [JS Hint](#js-hint)
+   - [Pylint-Django](#pylint-django)
+6. [Challenges & Bugs](#challenges—bugs)
+7. [Technologies Used](#technologies-used)
+8. [Deployment](#deployment)
+9. [Creating the Heroku app](#creating-the-heroku-app)
+10. [Development](#development)
+11. [Credits](#credits)
 
 ## **Goals**
 
-The primary goals are to replace manual clumsy attempts at keeping past scores and submissions on an excel spreadsheet, and to create a thriving community of users who also enjoy curating playlists and listening to music. In the future, we envision:
+## **Database Modelling**
 
-- Expanding the user base and allowing users to form connections with one another based on their shared music tastes.
-- Facilitating Club-on-Club competitions with anonymous submissions and ratings until the very end.
-- Further intregration of the Spotify API to enhance parameters and thus set better recommendations between users.
-
-## **Django Apps**
-
-Though the apps primary features are detailed [**below**](#features), here is a quick overview on the Django file structure that is used and an overview on what the different apps do in the grand scheme of We Rate Music.
-
-### **Users**
-
-The "Users" application allows users to:
-
-- Add their public Spotify playlists to their "We Rate Music" profile.
-- Discover and explore playlists shared by other users.
-- Personalise their profiles with a profile picture, a background picture for their profile and their Spotify username information.
-
-### **Clubs**
-
-The "Clubs" application serves users with all club-related features:
-
-- Create, view, edit, and delete clubs.
-- Invite members.
-- Handle invitations displayed on users' profiles.
-
-### **Seasons**
-
-Within the "Seasons" application, club founders can:
-
-- Create seasons with a short description for rules of the season.
-- Collect and display playlists from its club members.
-- Enable members to rate playlists, with the results tracked and averaged for each playlist in each season.
+![The Database Model Diagram](docs/readme/images/database-model-diagram.png)
 
 ## **Features**
 
-### **Spotify API**
-
-Public Spotify playlists of a user can be searched and added to their "We Rate Music" profile. The API is currently limited to this information:
-
-- Playlist name.
-- Playlist album cover image.
-- Track names within the playlist.
-
-As the app grows I would like to include far more utility around the Spotify API, more information on what is on the roadmap can be found [**here**](#future-featuresroadmap).
-
-Users must add their Spotify username to use this feature (found within the accounts tab in their Spotify app/web app). As this feature is an integral part of using the "We Rate Music" app, users without at least a free Spotify account will not be able to use "We Rate Music" effectively .
-
-### **User Profile**
-
-Users can sign-up to the application using a unique username and password.
-
-### **Settings**
-
-Within the "Settings" tab in user profiles, users can:
-
-- Customise user profiles with profile/background pictures.
-- Add their Spotify username information.
-
-### **User Stats**
-
-Coming soon...
-
-### **Discover Playlists**
-
-Within the "Discover" view users can:
-
-- Explore other users' playlists.
-- Search for other users and view their profiles.
-
-### **View/Create Clubs**
-
-This feature allows users to:
-
-- Create clubs.
-- Invite members.
-<!-- NOT YET ADDED -->
-- Create seasons with a text descriptive theme.
-- Rate other members' playlists within seasons.
-- View past seasons, playlist submissions and respective ratings.
-
-### **Add Playlists**
-
-Users can use the Spotify API to:
-
-- Add their public Spotify playlists to their "We Rate Music" profile.
-<!-- NOT YET ADDED -->
-- Remove playlists from their profiles.
-
 ## **Future Features/Roadmap**
-
-The roadmap includes:
-
-- Enhanced Spotify API integration for a better user experience, such as the inclusion of genre information on tracks within playlists. This will enable the app to better pinpoint user genre preferences and allow other users to see this information on each others profiles.
-- Support for club-on-club competitions; with anonymous submissions and scoring right up until the end, users can be excited to see which club curated the better playlists on average for the chosen season.
-- User-Follow functionality; allowing users to stay connected to other users based on their ability to curate music and their music taste.
-- Comments section for playlists, to allow users to express their thoughts and feelings on playlists.
-- Season voting system; club founders can propose a few season/rules to their members and members can vote on which season goes next.
-- Join season feature; giving members more flexibility to join or skip a season.
-- More control for clubs; founders can kick members and urge them to hasten up their submissions.
-- User-Statistics tab: for a more advanced view on each user's genre preference, average ratings given, amount of seasons completed etc.
 
 ## **Testing**
 
-### **Pylint**
+<!-- LIGHTHOUSE TESTING?! -->
+
+### **W3C Markup Validation**
+
+[W3C Markup Validation Services](https://validator.w3.org/) were used to check every page throughout the application, below are the reports for each; and if any errors were present, they are included below:
+
+All Users Accessible sites:
+[Homepage](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2F): No errors or warnings to show.
+[Sign-up page](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Faccounts%2Fsignup%2F): Errors on Django's own form element - ignored
+[Login page](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Faccounts%2Flogin%2F): No errors or warnings to show.
+[Logout page](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Faccounts%2Flogout%2F): No errors or warnings to show.
+[Season Post Detail View](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Fseason%2Frock-music%2F): No errors or warnings to show.
+
+Staff User Accessible sites:
+[Create Season Post View](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Fseason%2Fcreate%2F): Errors on Django's own form element - ignored
+[Spotify API Search](https://validator.w3.org/nu/?doc=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2Fseason%2Frock-music%2Fspotify-search): Errors on Django's own form element - ignored
+
+### **W3C CSS Validation**
+
+All of my own custom CSS passed validation, however 16 errors and 258 warnings were found overall as seen [here](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fwe-rate-music-simplified-c7886543742e.herokuapp.com%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en). This was safetly ignored as it was a direct download from [Start Bootstrap's Theme](https://startbootstrap.com/template/blog-home).
+
+### **JS Hint**
+
+[JS Hint](https://jshint.com/) was used to test the custom static script.js file, with no notable errors.\
+![JS Hint Results](docs/readme/images/jshint-results.png)
+
+### **Pylint-Django**
+
+[Pylint-Django](https://pypi.org/project/pylint-django/) was used to run on every python file in the apps part of the project, the list of files and their respective results are below, including any complaints, if any:
+
+- blog/admin.py: 10/10
+- blog/apps.py: 10/10
+- blog/forms.py: 10/10
+- blog/models.py: 8.84/10
+  - 2:0: E5142: User model imported from django.contrib.auth.models (imported-auth-user)
+- blog/spotify_api.py: 9.11/10
+  - 35:13: W3101: Missing timeout argument for method 'post' can cause your program to hang indefinitely (missing-timeout)
+  - 51:0: R0914: Too many local variables (17/15) (too-many-locals)
+  - 89:12: W0622: Redefining built-in 'id' (redefined-builtin)
+  - 68:14: W3101: Missing timeout argument for method 'get' can cause your program to hang indefinitely (missing-timeout)
+  - 11:4: W0611: Unused import env (unused-import)
+- blog/urls.py: 10/10
+  - Note: "# pylint: disable=line-too-long" was added to ignore long lines as it made sense to do so here.
+- blog/views.py: 9.9/10
+  - 146:22: W0612: Unused variable 'created' (unused-variable)
 
 ### **Process**
 
 ## **Challenges & Bugs**
 
 ### **Challenges**
-
-- REDIRECT URL 03/10-04/10/23
-
-  - tried directly through settings.py: not industry standard, not advised
-  - tried tweaking the LoginView from djangos own views, found out it would be best to create a custom view that inherits from LoginView + didn't work anyway
-  - def get_success_url(self): tried messing with this in my own view and failed
-  - def form_valid(self, form): tried changing this and returning my own dynamic url and also failed
-  - pushed the issue down the line
-
-- Using different views from Django:
-  - because of my navbar in base.html requiring certain variables to be returned
-    - FIXED by adding the method get_context_data
 
 ### **Fixed Bugs**
 
@@ -200,7 +138,7 @@ The project was deployed on GitHub pages from the ‘Main Branch Source Code’ 
 
 GitHub may take a few minutes to deploy the website so be patient.
 
-You can view the application on Heroku by clicking [**here**](LINK).
+You can view the application on Heroku by clicking [**here**](https://we-rate-music-simplified-c7886543742e.herokuapp.com/).
 
 ## **Creating the Heroku app**
 
@@ -253,7 +191,6 @@ Thank you for your interest in the project, and I look forward to any contributi
 - https://startbootstrap.com/template/blog-home - Template for homepage
 - https://startbootstrap.com/template/blog-post - Template for individual blog entries
 - https://www.youtube.com/watch?v=WAmEZBEeNmg - This video got me off the ground when integrating the Spotify API
-- https://www.youtube.com/watch?v=jqSl36xR9Ys&t=169s - live search feature + talk about jinja template not accepting JS template literals (${..})
 
 ### **Content**
 
@@ -266,12 +203,3 @@ Thank you for your interest in the project, and I look forward to any contributi
 - [WhiteNoise Django Documentation](https://whitenoise.readthedocs.io/en/latest/django.html)
 - [Stack Overflow](https://stackoverflow.com/) - general enquiries/syntax
 - [W3Schools](https://www.w3schools.com/) - general enquiries/syntax
-
-<!--
-PROBLEMS:
-- User signup, when entering an email address, throws an error.
-- Add 'active' class in base.html nav elements:
-   - <li class="nav-item"><a class="nav-link {% if request.path == homepage_url %}active{% endif %}" href="{% url 'homepage' %}">Home</a></li>
-- Add aria-current in base.html nav elements:
-   - <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'account_signup' %}">Sign Up</a></li>
--->
