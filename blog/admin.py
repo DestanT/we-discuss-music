@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
-from .models import *
+from .models import Season, SpotifyPlaylist, Comment, CommentReply
 
 
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Season)
 class SeasonAdmin(SummernoteModelAdmin):
-    summernote_fields = ('description')
+    summernote_fields = 'description'
     list_display = ('author', 'description', 'title', 'created_on')
     list_filter = ('author', 'created_on')
     search_fields = ['title', 'description']
