@@ -1,9 +1,12 @@
 from django.test import SimpleTestCase, TestCase
 from django.test.client import Client
 from django.urls import reverse, resolve
-from django.contrib.auth.models import User
-from blog.models import Season, Comment
-from blog.views import *
+from blog.views import (
+    SeasonListView, SeasonCreateView, SeasonDetailView,
+    SpotifyApiView, AddPlaylistView,
+    CommentCreateView, CommentUpdateView, CommentDeleteView,
+    ReplyCreateView
+)
 
 
 class TestUrls(SimpleTestCase):
