@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.forms import Textarea
 from blog.forms import SeasonForm, CommentForm, CommentReplyForm, SpotifyApiForm
-from blog.models import Season, Comment
-from django.contrib.auth.models import User
+from blog.models import Season
 
 
 class TestSeasonForm(TestCase):
@@ -40,7 +39,7 @@ class TestSeasonForm(TestCase):
             'slug': 'the-same-title',
             'description': 'something'
             })
-        
+
         self.assertFalse(form.is_valid())
         self.assertIn('title', form.errors.keys())
         self.assertEqual(form.errors['title'][0], 'Season with this Title already exists.')
@@ -63,7 +62,7 @@ class TestSeasonForm(TestCase):
 
     def test_season_form_fields_are_explicit_in_form_metaclass(self):
         form = SeasonForm()
-        
+
         self.assertEqual(form.Meta.fields, ('title', 'description', 'image'))
 
     def test_season_form_labels_display_correctly(self):
@@ -93,11 +92,14 @@ class TestCommentForm(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn('body', form.errors.keys())
-        self.assertEqual(form.errors['body'][0], 'Ensure this value has at most 300 characters (it has 301).')
+        self.assertEqual(
+            form.errors['body'][0],
+            'Ensure this value has at most 300 characters (it has 301).'
+        )
 
     def test_comment_form_fields_are_explicit_in_form_metaclass(self):
         form = CommentForm()
-        
+
         self.assertEqual(form.Meta.fields, ('body',))
 
     def test_comment_form_labels_display_correctly(self):
@@ -109,9 +111,12 @@ class TestCommentForm(TestCase):
         form = CommentForm()
 
         self.assertIsInstance(form.Meta.widgets['body'], Textarea)
-        self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a comment...',})
+        self.assertEqual(
+            form.Meta.widgets['body'].attrs,
+            {'cols': 40, 'rows': 1, 'placeholder': 'Add a comment...',}
+        )
 
-    
+
 class TestCommentReplyForm(TestCase):
     '''
     Tests are identical to TestCommentForm
@@ -134,11 +139,14 @@ class TestCommentReplyForm(TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertIn('body', form.errors.keys())
-        self.assertEqual(form.errors['body'][0], 'Ensure this value has at most 300 characters (it has 301).')
+        self.assertEqual(
+            form.errors['body'][0],
+            'Ensure this value has at most 300 characters (it has 301).'
+        )
 
     def test_reply_form_fields_are_explicit_in_form_metaclass(self):
         form = CommentReplyForm()
-        
+
         self.assertEqual(form.Meta.fields, ('body',))
 
     def test_reply_form_labels_display_correctly(self):
@@ -150,7 +158,10 @@ class TestCommentReplyForm(TestCase):
         form = CommentReplyForm()
 
         self.assertIsInstance(form.Meta.widgets['body'], Textarea)
-        self.assertEqual(form.Meta.widgets['body'].attrs, {'cols': 40, 'rows': 1, 'placeholder': 'Add a reply...',})
+        self.assertEqual(
+            form.Meta.widgets['body'].attrs,
+            {'cols': 40, 'rows': 1, 'placeholder': 'Add a reply...',}
+        )
 
 
 class TestSpotifyApiForm(TestCase):
