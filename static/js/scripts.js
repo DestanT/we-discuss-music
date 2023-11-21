@@ -17,7 +17,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
                 playlist => {
                     playlist.addEventListener('click', () => {
                         parent.classList.remove('d-none');
-                        EmbedController.loadUri(playlist.dataset.spotifyId)
+                        EmbedController.loadUri(playlist.dataset.spotifyId);
                         
                         const addPlaylistButton = document.getElementById(`addPlaylistButton${playlist.dataset.resultId}`);
                         addPlaylistButton.classList.toggle('d-none');
@@ -28,7 +28,7 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
                         }
                         previousButton = addPlaylistButton;
                     });
-                })
+                });
             };
             IFrameAPI.createController(element, options, callback);
         }
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     // Event listeners for editing comments
-    const editCommentButtons = document.querySelectorAll(".edit-comment")
+    const editCommentButtons = document.querySelectorAll(".edit-comment");
     if (editCommentButtons) {
 
         editCommentButtons.forEach(function (button) {
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 
                 // comment.id from data- attribute
                 let commentId = button.getAttribute("data-comment-id");
-                let commentDiv = document.getElementById(`comment${commentId}`)
+                let commentDiv = document.getElementById(`comment${commentId}`);
                 let editCommentDiv = document.getElementById(`edit-comment${commentId}`);
                 
                 // Hide the comment itself and replace with the update form
