@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from . import views
 
+# pylint: disable=line-too-long
 urlpatterns = [
     path("create/", views.SeasonCreateView.as_view(), name="create_season"),
     path("<slug:slug>/", views.SeasonDetailView.as_view(), name="season_detail"),
