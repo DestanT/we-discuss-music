@@ -7,7 +7,11 @@ class SeasonForm(ModelForm):
     class Meta:
         model = Season
         fields = ('title', 'description', 'image')
-        labels = {'title': 'Season Title', 'description': 'Write a short description', 'image': 'Add a cover image'}
+        labels = {
+            'title': 'Season Title',
+            'description': 'Write a short description',
+            'image': 'Add a cover image'
+        }
 
 
 class CommentForm(ModelForm):
@@ -16,7 +20,7 @@ class CommentForm(ModelForm):
         fields = ('body',)
         labels = {'body': ''}
         widgets = {
-            'body': Textarea(attrs={
+            'body': Textarea(attrs = {
                 'cols': 40,
                 'rows': 1,
                 'placeholder': 'Add a comment...',
@@ -30,7 +34,7 @@ class CommentReplyForm(ModelForm):
         fields = ('body',)
         labels = {'body': ''}
         widgets = {
-            'body': Textarea(attrs={
+            'body': Textarea(attrs = {
                 'cols': 40,
                 'rows': 1,
                 'placeholder': 'Add a reply...',
