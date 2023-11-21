@@ -27,7 +27,7 @@ class SeasonListView(ListView):
         context['latest_season'] = Season.objects.first()
         context['all_seasons'] = Season.objects.all()
         return context
-    
+
 
 class SeasonDetailView(DetailView):
     model = Season
@@ -42,7 +42,7 @@ class SeasonDetailView(DetailView):
         context['comment_form'] = CommentForm()
         context['reply_form'] = CommentReplyForm()
         return context
-    
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class SeasonCreateView(CreateView):
@@ -70,27 +70,27 @@ class CommentCreateView(CreateView):
         form.instance.season = season
         form.instance.user = self.request.user
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
-    
+
 
 class CommentUpdateView(UpdateView):
     model = Comment
     fields = ['body']
-    
+
     def get_success_url(self):
         messages.success(self.request, 'Your comment has been updated')
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
-    
+
 
 class CommentDeleteView(DeleteView):
     model = Comment
-    
+
     def get_success_url(self):
         messages.success(self.request, 'Your comment has been deleted successfully')
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
-        
+
 
 class ReplyCreateView(CreateView):
     model = CommentReply
@@ -102,10 +102,10 @@ class ReplyCreateView(CreateView):
         form.instance.comment = comment
         form.instance.user = self.request.user
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.kwargs.get('slug')})
-    
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class SpotifyApiView(FormView):
