@@ -13,8 +13,8 @@
 
       <h3>{% trans "Sign In" %}</h3>
 
-      <p>{% blocktrans %}Welcome to We Rate Music. To be apart of the community and join in on rating playlists and
-        comment, please log in. If you have not created an account yet, then please
+      <p>{% blocktrans %}Welcome to We Discuss Music. To be apart of the community and join in on the latest discussions
+        around various themes and playlists please log in. If you have not created an account yet, then please
         <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
       </p>
 
@@ -29,7 +29,7 @@
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <button class="btn btn-success" type="submit">{% trans "Sign In" %}</button>
+        <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
       </form>
 
     </div>
