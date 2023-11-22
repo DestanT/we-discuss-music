@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="small text-muted">{{ latest_season.created_on }}</div>
                     <h2 class="card-title">Current Season: {{ latest_season.title }}</h2>
-                    <p class="card-text">This seasons rules are:</p>
+                    <p class="card-text">This seasons is about:</p>
                     <p class="card-text">{{ latest_season.description }}</p>
                     <a class="btn btn-primary" href="{% url 'season_detail' slug=latest_season.slug %}">
                         Read more →
@@ -53,8 +53,8 @@
                         <div class="card-body">
                             <div class="small text-muted">{{ season.created_on }}</div>
                             <h2 class="card-title h4">{{ season.title }}</h2>
-                            <p class="card-text">This seasons rules are:</p>
-                            <p class="card-text">{{ season.description }}</p>
+                            <p class="card-text">This seasons is about:</p>
+                            <p class="card-text text-truncate">{{ season.description }}</p>
                             <a class="btn btn-primary" href="{% url 'season_detail' slug=season.slug %}">
                                 Read more →
                             </a>
