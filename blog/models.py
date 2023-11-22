@@ -6,6 +6,17 @@ User = get_user_model()
 
 # Credit: CI 'Django Blog' walkthrough project
 class Season(models.Model):
+    '''
+    Model for season blog posts.
+
+    Attributes:
+    - title (CharField)
+    - slug (SlugField)
+    - description (TextField)
+    - image (CloudinaryField)
+    - author (FK - User)
+    - created_on (DateTimeField)
+    '''
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100)
     description = models.TextField(blank=False)
@@ -26,6 +37,17 @@ class Season(models.Model):
 
 
 class SpotifyPlaylist(models.Model):
+    '''
+    Model for Spotify playlists.
+
+    Attributes:
+    - playlist_id (PK - CharField)
+    - seasons (ManyToManyField - Season)
+    - image (URLField)
+    - name (CharField)
+    - external_url (URLField)
+    - iframe_uri (CharField)
+    '''
     playlist_id = models.CharField(max_length=100, primary_key=True)
     seasons = models.ManyToManyField(Season, blank=True, related_name='playlists')
     image = models.URLField(max_length=200)
@@ -39,6 +61,15 @@ class SpotifyPlaylist(models.Model):
 
 # Credit: CI 'Django Blog' walkthrough project
 class Comment(models.Model):
+    '''
+    Model for Comments.
+
+    Attributes:
+    - season (FK - Season)
+    - user (FK - User)
+    - body (TextField)
+    - created_on (DateTimeField)
+    '''
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     body = models.TextField(blank=False, max_length=300)
@@ -53,6 +84,15 @@ class Comment(models.Model):
 
 # Credit: CI 'Django Blog' walkthrough project
 class CommentReply(models.Model):
+    '''
+    Model for Replies.
+
+    Attributes:
+    - comment (FK - Season)
+    - user (FK - User)
+    - body (TextField)
+    - created_on (DateTimeField)
+    '''
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
     body = models.TextField(blank=False, max_length=300)
