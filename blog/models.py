@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from cloudinary.models import CloudinaryField
 
+User = get_user_model()
 
 # Credit: CI 'Django Blog' walkthrough project
 class Season(models.Model):
@@ -50,6 +51,7 @@ class Comment(models.Model):
         return self.body
 
 
+# Credit: CI 'Django Blog' walkthrough project
 class CommentReply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='replies')
