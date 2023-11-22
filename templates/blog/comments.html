@@ -45,7 +45,7 @@
         <div class="d-flex mt-3">
             <div class="flex-grow-1 ms-5">
                 <div class="fw-bold">{{ reply.user }}
-                    {% if comment.user.is_staff %}<em class="fw-lighter">(Admin)</em>{% endif %}
+                    {% if reply.user.is_staff %}<em class="fw-lighter">(Admin)</em>{% endif %}
                 </div>
                 {{ reply.body }}
             </div>
