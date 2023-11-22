@@ -20,8 +20,10 @@ To access the live site, you can click [**here**](https://we-rate-music-simplifi
 2. [Database Modelling](#database-modelling)
 3. [Features:](#features)
    - [Season Posts](#season-posts)
-   - [Spotify API](#spotify-api)
    - [Add Playlists](#add-playlists)
+   - [Spotify API Integration](#spotify-api-integration)
+   - [Comments](#comments)
+   - [Reply to Comments](#reply-to-comments)
 4. [Future Features/Roadmap](#future-featuresroadmap)
 5. [Testing](#testing)
    - [W3C Markup Validation](#w3c-markup-validation)
@@ -42,6 +44,56 @@ To access the live site, you can click [**here**](https://we-rate-music-simplifi
 ![The Database Model Diagram](docs/readme/images/database-model-diagram.png)
 
 ## **Features**
+
+### Season Posts
+
+At its foundation the Season Posts are what drive the platform. Each post revolves around a specific musical theme, put together by dedicated site administrators. The posts house the Spotify playlists themselves and its discussions between users.
+
+![Season Posts](docs/readme/images/season-posts.png)
+
+The posts are paginated every four posts, this speeds up loads times and ensures minimising scrolling for an overall better user experience. It is also worth mentioning that the most recent post is always featured on top of the page with a larger image, even throughout pagination.
+
+![Site Pagination](docs/readme/images/site-pagination.png)
+
+For even greater convenience to the user; all Season posts can be found and are clickable on a widget, located to the right of the page (bottom - on mobile).
+
+![Widget](docs/readme/images/season-finder.png)
+
+Only site admins have access to the "Create Season" button in the navbar:
+
+![Navbar Create Season Button](docs/readme/images/create-season-button.png)
+
+And once clicked admins are taken to the page where they can create a new Season post, where they can add a title, a description and a cover image to display to their users.
+
+![Create Season Form](docs/readme/images/create-season-post-form.png)
+
+### Add Playlists
+
+As an admin, once a Season post has been created you can choose to add playlists from Spotify to display in your posts.
+
+![Add Playlists to Season Posts](docs/readme/images/add-playlist-button-detail-view.png)
+
+A parameter selection is present, of which you can choose "Playlist" or "Album" or both, depending on what it is you are looking for.
+
+![Search Spotify](docs/readme/images/spotify-search.png)
+
+Search results can be clicked and the playlist can be listened to directly on the platform.
+
+![Add Playlist Button After Searching](docs/readme/images/add-playlist-button.png)
+
+Once happy with the selection, the "Add Playlist" button can be pressed to activate a confirmation modal, before then finally adding the playlist/album to the Season post.
+
+![Add Playlist Confirmation Modal](docs/readme/images/add-playlist-confirmation-modal.png)
+
+### Spotify API Integration
+
+The Spotify API works twofold; on one end it allows our site administrators to search for playlists and albums from Spotify directly and display them on the platform. On the other end it allows users to experience the music without ever leaving the platform through the embedded player. Spotify's embedded "iFrame" player can be found on every page that albums/playlists display, so that's the search page for admins and in the Season posts for everyone.
+
+![iFrame Player](docs/readme/images/iframe-player-detail-view.png)
+
+### Comments
+
+### Reply to Comments
 
 ## **Future Features/Roadmap**
 
@@ -80,8 +132,7 @@ All of my own custom CSS passed validation, however 16 errors and 258 warnings w
 - blog/admin.py: 10/10
 - blog/apps.py: 10/10
 - blog/forms.py: 10/10
-- blog/models.py: 8.84/10
-  - 2:0: E5142: User model imported from django.contrib.auth.models (imported-auth-user)
+- blog/models.py: 10/10
 - blog/spotify_api.py: 9.11/10
   - 35:13: W3101: Missing timeout argument for method 'post' can cause your program to hang indefinitely (missing-timeout)
   - 51:0: R0914: Too many local variables (17/15) (too-many-locals)
