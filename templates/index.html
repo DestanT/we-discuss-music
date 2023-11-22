@@ -18,7 +18,7 @@
             <div class="card mb-4">
                 <a href="{% url 'season_detail' slug=latest_season.slug %}">
                     {% if "placeholder" in latest_season.image.url %}
-                    <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg"
+                    <img class="img-fluid rounded" src="https://dummyimage.com/1100x400/ced4da/6c757d.jpg"
                         alt="Placeholder image">
                     {% else %}
                     <img class="img-fluid rounded" src="{{ latest_season.image.url }}"
