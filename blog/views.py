@@ -45,7 +45,6 @@ class SeasonDetailView(DetailView):
 class SeasonCreateView(CreateView):
     model = Season
     form_class = SeasonForm
-    template_name = 'blog/create_season.html'
 
     # Populate the rest of the Season model
     def form_valid(self, form):
