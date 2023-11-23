@@ -26,15 +26,25 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link active" href="{% url 'homepage' %}">Home</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}"
+                            href="{% url 'homepage' %}">Home</a></li>
                     {% if user.is_staff %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'create_season' %}">Create Season</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {% if request.resolver_match.url_name == 'create_season' %}active{% endif %}"
+                            href="{% url 'create_season' %}">Create Season</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {% if request.resolver_match.url_name == 'account_logout' %}active{% endif %}"
+                            href="{% url 'account_logout' %}">Logout</a></li>
                     {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {% if request.resolver_match.url_name == 'account_login' %}active{% endif %}"
+                            href="{% url 'account_login' %}">Login</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link {% if request.resolver_match.url_name == 'account_signup' %}active{% endif %}"
+                            href="{% url 'account_signup' %}">Sign Up</a></li>
                     {% endif %}
                 </ul>
             </div>
