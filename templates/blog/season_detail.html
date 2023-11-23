@@ -27,11 +27,17 @@
                         {% endif %}
                     </a>
                     {% if user.is_staff %}
-                    <div class="d-grid gap-2">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a class="btn btn-primary" href="{% url 'spotify_search' slug=season.slug %}">Add Playlists</a>
+                        <a class="btn btn-primary" href="{% url 'update_season' slug=season.slug %}">Update Post</a>
+                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal{{ season.pk }}">
+                            Delete Post</a>
                     </div>
                     {% endif %}
                 </figure>
+
+                <!-- Season post - confirmation modal -->
+                {% include 'blog/season_confirm_delete.html' %}
 
                 <!-- Season post details -->
                 <section class="mb-5">
