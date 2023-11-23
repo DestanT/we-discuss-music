@@ -54,6 +54,22 @@ class SeasonCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.object.slug}) # type: ignore
+    
+
+@method_decorator(staff_member_required, name='dispatch')
+class SeasonUpdateView(UpdateView):
+    model = Season
+    fields = ['title', 'description', 'image']
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.slug = slugify(self.object.title)
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Your Season post has been updated')
+        return reverse('season_detail', kwargs={'slug': self.object.slug})
 
 
 class CommentCreateView(CreateView):
