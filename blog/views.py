@@ -68,8 +68,17 @@ class SeasonUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Your Season post has been updated')
+        messages.success(self.request, 'The Season post has been updated')
         return reverse('season_detail', kwargs={'slug': self.object.slug})
+    
+
+@method_decorator(staff_member_required, name='dispatch')
+class SeasonDeleteView(DeleteView):
+    model = Season
+
+    def get_success_url(self):
+        messages.success(self.request, 'The Season post has been deleted successfully')
+        return reverse('homepage')
 
 
 class CommentCreateView(CreateView):
