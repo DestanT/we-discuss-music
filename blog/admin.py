@@ -7,7 +7,7 @@ from .models import Season, SpotifyPlaylist, Comment, CommentReply
 @admin.register(Season)
 class SeasonAdmin(SummernoteModelAdmin):
     summernote_fields = 'description'
-    list_display = ('author', 'description', 'title', 'created_on')
+    list_display = ('author', 'title', 'description', 'created_on')
     list_filter = ('author', 'created_on')
     search_fields = ['title', 'description']
     prepopulated_fields = {'slug': ('title',)}
@@ -23,7 +23,7 @@ class SpotifyPlaylistAdmin(admin.ModelAdmin):
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'season', 'body', 'created_on')
+    list_display = ('season', 'user', 'body', 'created_on')
     list_filter = ('user', 'season', 'created_on')
     search_fields = ['body']
 
@@ -31,6 +31,6 @@ class CommentAdmin(admin.ModelAdmin):
 # Credit: CI 'Django Blog' walkthrough project
 @admin.register(CommentReply)
 class CommentReplyAdmin(admin.ModelAdmin):
-    list_display = ('user', 'comment', 'body', 'created_on')
+    list_display = ('comment', 'user', 'body', 'created_on')
     list_filter = ('user', 'comment', 'created_on')
     search_fields = ['body']
