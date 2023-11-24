@@ -54,7 +54,7 @@ class SeasonCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('season_detail', kwargs={'slug': self.object.slug}) # type: ignore
-    
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class SeasonUpdateView(UpdateView):
@@ -70,7 +70,7 @@ class SeasonUpdateView(UpdateView):
     def get_success_url(self):
         messages.success(self.request, 'The Season post has been updated')
         return reverse('season_detail', kwargs={'slug': self.object.slug})
-    
+
 
 @method_decorator(staff_member_required, name='dispatch')
 class SeasonDeleteView(DeleteView):
