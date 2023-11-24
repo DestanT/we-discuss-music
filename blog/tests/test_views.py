@@ -223,7 +223,6 @@ class TestViews(TestCase):
         updated_comment = Comment.objects.get(pk=1)
         self.assertEqual(updated_comment.body, 'Updated Comment')
 
-
     # Tests for CommentDeleteView:
     def test_comment_delete_view_successfully_deletes_object(self):
         self.client.force_login(self.staff_member)
@@ -237,7 +236,6 @@ class TestViews(TestCase):
         # Check if none exist
         self.assertEqual(deleted_comment.count(), 0)
 
-    
     # Tests for ReplyCreateView:
     def test_reply_create_view_creates_new_reply_object(self):
         self.client.force_login(self.staff_member)
@@ -268,8 +266,11 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, success_url)
 
-    # def test_reply_create_view_POST(self):
-    #     pass
-
-    # def test_spotify_api_form_view(self):
-    #     pass
+    # Test SpotifyApiFormView:
+    def test_spotify_api_form_view_get_context_data(self):
+        self.client.force_login(self.staff_member)
+        response = self.client.get(reverse('spotify_search', kwargs={'slug': self.season.slug}))
+        
+        # Search results are initially set to "None" in view
+        self.assertIsNone(response.context['search_results'])
+        self.assertEqual(str(self.season.slug), response.context['season_slug'])
