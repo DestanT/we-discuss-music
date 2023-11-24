@@ -14,34 +14,57 @@ Register an account with us and join in on the conversations! Share your thought
 
 To access the live site, you can click [**here**](https://we-rate-music-simplified-c7886543742e.herokuapp.com/).
 
+![Am I Responsive image](docs/readme/images/am-i-responsive.png)
+
 ## **Table of Contents**
 
 1. [Goals](#goals)
-2. [Database Modelling](#database-modelling)
-3. [Features:](#features)
+2. [Wireframes and Design](#wireframes-and-design)
+3. [Database Modelling](#database-modelling)
+4. [Features:](#features)
    - [Season Posts](#season-posts)
    - [Add Playlists](#add-playlists)
    - [Spotify API Integration](#spotify-api-integration)
-   - [Comments](#comments)
-   - [Reply to Comments](#reply-to-comments)
-4. [Future Features/Roadmap](#future-featuresroadmap)
-5. [Testing](#testing)
+   - [The Comment Section](#the-comment-section)
+   - [Alerts](#alerts)
+5. [Future Features/Roadmap](#future-featuresroadmap)
+6. [Testing](#testing)
    - [W3C Markup Validation](#w3c-markup-validation)
    - [W3C CSS Validation](#w3c-css-validation)
    - [JS Hint](#js-hint)
    - [Pylint-Django](#pylint-django)
-6. [Challenges & Bugs](#challenges—bugs)
-7. [Technologies Used](#technologies-used)
-8. [Deployment](#deployment)
-9. [Creating the Heroku app](#creating-the-heroku-app)
-10. [Development](#development)
-11. [Credits](#credits)
+7. [Challenges & Bugs](#challenges—bugs)
+8. [Technologies Used](#technologies-used)
+9. [Deployment](#deployment)
+10. [Creating the Heroku app](#creating-the-heroku-app)
+11. [Development](#development)
+12. [Credits](#credits)
 
 ## **Goals**
+
+Site Admin Goals
+
+- **Build a community** of music enthusiasts and share with them a collection of playlists.
+- **Group together** various playlists into their own themed posts.
+- **Listen to discussions** between users and drive forward inspiration for the next post.
+
+Site User Goald
+
+- **Discover** new playlists and perhaps long forgotten playlists.
+- **Join in on conversations** with the site admins and other users.
+- **Enjoy a library** of premade themed posts, all with their own unique direction in playlists.
+
+## **Wireframes and Design**
+
+![The Wireframe](docs/readme/images/wireframe-png.png)
 
 ## **Database Modelling**
 
 ![The Database Model Diagram](docs/readme/images/database-model-diagram.png)
+
+The models; Season, Comment and CommentReply are essentially a copy from Code Institute's "Django Blog" walkthrough project. My custom model for this project is the SpotifyPlaylist model. Every season can have multiple Spotify playlists added to them and the same playlist can be a part of multiple season posts. The backend saves every playlist that has been added for the first time, and re-uses it should it be added as part of another season post.
+
+The iframe_uri field for example is used in the embedded Spotify player - allowing it to display the correct album or playlist when users click on them.
 
 ## **Features**
 
@@ -91,15 +114,74 @@ The Spotify API works twofold; on one end it allows our site administrators to s
 
 ![iFrame Player](docs/readme/images/iframe-player-detail-view.png)
 
-### Comments
+### The Comment Section
 
-### Reply to Comments
+All registered and signed-in users can post comments.
+
+![Comments](docs/readme/images/comment-form.png)
+
+Icons below user's own comments allow for them to be deleted or updated.
+
+![CRUD Functions on comments](docs/readme/images/crud-comments.png)
+
+Clicking update:
+
+![Updating comment](docs/readme/images/comment-update.png)
+
+Clicking delete brings up a confirmation modal:
+
+![Deleting a comment](docs/readme/images/comment-delete-modal.png)
+
+Registered and logged-in users can reply to comments to better drive a conversation.
+
+![Replying to a comment](docs/readme/images/reply-form.png)
+
+and all comments and replies show if an admin user is in the mix.
+
+![Admin users in the comment section](docs/readme/images/replies-admin-status.png)
+
+### Alerts
+
+Various action throughout the platform trigger Bootstrap's alerts, custom JavaScript automatically closes them after 2.5 seconds. These actions include:
+
+- Logging in
+- Logging out
+- Updating a Season post
+- Deleting a Season post
+- Adding a playlist
+- Updating a comment
+- Deleting a comment
+
+![Bootstrap Alerts](docs/readme/images/alerts.png)
+
+### Responsive Design
+
+![Burger Menu on Mobile Devices](docs/readme/images/collapsible-menu.png)
 
 ## **Future Features/Roadmap**
 
+In future sprints the application will include the following features:
+
+- Edited comments will display a "_(edited)_" text with the original text available when clicked.
+- The Spotify iFrame will be closable - currently the only way to close it, is to refresh the page.
+- Users will have the ability to customise their profiles with profile pictures - making the comments section more lively.
+- CRUD functionality and the "_(edited)_" feature will also come to replies.
+- Admin users will be able to delete any unwanted playlists from posts without the need for the admin panel.
+-
+
 ## **Testing**
 
-<!-- LIGHTHOUSE TESTING?! -->
+### **Lighthouse Testing**
+
+<u>Desktop</u>
+
+![Homepage - Desktop](docs/readme/images/desktop-lighthouse-test-homepage.png)
+
+<u>Mobile</u>
+
+![Homepage - Mobile](docs/readme/images/mobile-lighthouse-test-homepage.png)
+
+This test revealed performance issues, primarily due to image sizing and unused CSS.
 
 ### **W3C Markup Validation**
 
@@ -141,8 +223,16 @@ All of my own custom CSS passed validation, however 16 errors and 258 warnings w
   - 11:4: W0611: Unused import env (unused-import)
 - blog/urls.py: 10/10
   - Note: "# pylint: disable=line-too-long" was added to ignore long lines as it made sense to do so here.
-- blog/views.py: 9.9/10
-  - 146:22: W0612: Unused variable 'created' (unused-variable)
+- blog/views.py: 9.83/10
+
+  - 65:8: W0201: Attribute 'object' defined outside --init-- (attribute-defined-outside-init)
+  - 170:22: W0612: Unused variable 'created' (unused-variable)
+
+- blog/tests/test_forms.py: 10/10
+- blog/tests/test_models.py: 10/10
+- blog/tests/test_urls.py: 10/10
+- blog/tests/test_views.py: 9.94/10
+  - 10:0: R0904: Too many public methods (29/20) (too-many-public-methods) - in hindsight and given more time, I would have written this test file very differently.
 
 ### **Process**
 
@@ -150,9 +240,15 @@ All of my own custom CSS passed validation, however 16 errors and 258 warnings w
 
 ### **Challenges**
 
+By far the biggest challenge I had during this project was constraining myself to a "Minimum Viable Product". For context, I was 7 weeks into building the beginnings of a social media project with Instagram style user profiles and various Spotify API functions. As it isn't directly related to this new project I won't dive deep into what that project looked like. But the sheer scale and small amount of time left before the deadline meant restarting with a much simpler project was the better way to go.
+
+Writing unit tests for the first time was a very rocky road in itself. Some tests were incredibly easy, and yet some tests simply did not work. I wanted to challenge myself by fully testing the project with code, and even though I didnt 100% succeed with my goal I am very happy to have come as close as 92% tested (using "coverage report")
+
 ### **Fixed Bugs**
 
 ### **Unfixed Bugs**
+
+To the best of my knowledge no known, unfixed bugs exist.
 
 ## **Technologies Used**
 
