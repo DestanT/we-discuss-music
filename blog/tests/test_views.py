@@ -148,7 +148,6 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, success_url)
 
-    
     # Tests for SeasonUpdateView:
     def test_season_update_view_correctly_updates_object(self):
         self.client.force_login(self.staff_member)
@@ -167,7 +166,6 @@ class TestViews(TestCase):
         updated_season = Season.objects.get(slug='updated-title')
         self.assertEqual(updated_season.title, 'Updated Title')
 
-    
     # Tests for SeasonDeleteView:
     def test_season_delete_view_successfully_deletes_object(self):
         self.client.force_login(self.staff_member)
@@ -180,16 +178,7 @@ class TestViews(TestCase):
 
         self.assertEqual(get_response.status_code, 404)
 
-
     # Tests for CommentCreateView:
-    # def test_comment_create_view_invalid_form_data(self):
-    #     season = self.season
-    #     self.client.force_login(self.test_user)
-    #     form_data = {'season': self.season, 'user': self.test_user, 'body': ''}
-    #     response = self.client.post(reverse('season_comment', kwargs={'slug': season.slug}), data=form_data)
-
-    #     self.assertFormError(response, 'form', 'body', 'this field is required.')
-
     def test_comment_create_view_creates_new_comment_object(self):
         self.client.force_login(self.staff_member)
         form_data = {'season': self.season, 'user': self.staff_member, 'body': 'This is a new comment'}
@@ -198,7 +187,6 @@ class TestViews(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Comment.objects.all().count(), previous_comment_count + 1)
-
 
     def test_comment_create_view_form_valid_method_sets_season_and_user_correctly(self):
         self.client.force_login(self.staff_member)
@@ -209,7 +197,6 @@ class TestViews(TestCase):
         self.assertEqual(new_comment.user, self.staff_member) # type: ignore
         self.assertEqual(new_comment.season, self.season) # type: ignore
 
-
     def test_comment_create_view_get_success_url_method_successfully_redirects(self):
         self.client.force_login(self.staff_member)
         form_data = {'season': self.season, 'user': self.staff_member, 'body': 'This is a test'}
@@ -219,12 +206,22 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, success_url)
 
+    # Tests for CommentUpdateView:
+    def test_comment_update_view_correctly_updates_object(self):
+        self.client.force_login(self.staff_member)
+        
+        # Current comment
+        self.assertEqual(self.comment.body, 'Test comment')
+        self.assertEqual(self.comment.pk, 1)
+        
+        # Post updated form and check redirect
+        form_data = {'body': 'Updated Comment'}
+        post_response = self.client.post(reverse('update_comment', kwargs={'slug': self.season.slug, 'pk': self.comment.pk}), data=form_data)
+        self.assertEqual(post_response.status_code, 302)
 
-    # def test_comment_create_view_POST(self):
-    #     pass
-
-    # def test_comment_update_view_POST(self):
-    #     pass
+        # Check if slug and title changed correctly
+        updated_comment = Comment.objects.get(pk=1)
+        self.assertEqual(updated_comment.body, 'Updated Comment')
 
     # def test_comment_delete_view_POST(self):
     #     pass
