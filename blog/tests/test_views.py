@@ -1,8 +1,10 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog.models import Season, Comment, CommentReply
-from blog.views import *
+from blog.forms import CommentForm, CommentReplyForm
+
+User = get_user_model()
 
 
 class TestViews(TestCase):
@@ -108,7 +110,7 @@ class TestViews(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/admin/login/?next=/season/create/')
-    
+
     def test_season_create_view_status_code_is_200_when_staff_member_is_logged_in(self):
         self.client.force_login(self.staff_member)
         response = self.client.get(reverse('create_season'))
@@ -124,7 +126,7 @@ class TestViews(TestCase):
     def test_season_create_view_creates_new_season_object(self):
         self.client.force_login(self.staff_member)
         form_data = {'title': 'New Season Object', 'description': 'Some description'}
-        response = self.client.post(reverse('create_season'), data=form_data)
+        self.client.post(reverse('create_season'), data=form_data)
 
         # SetUp creates 2 seasons, +1 = 3
         self.assertEqual(Season.objects.count(), 3)
@@ -156,10 +158,12 @@ class TestViews(TestCase):
         # Get original Season object and check original title
         self.assertEqual(get_response.status_code, 200)
         self.assertEqual(self.season.title, 'Test Title')
-        
+
         # Post updated form and check redirect
         form_data = {'title': 'Updated Title', 'description': 'Updated description'}
-        post_response = self.client.post(reverse('update_season', args=[self.season.slug]), data=form_data)
+        post_response = self.client.post(
+            reverse('update_season', args=[self.season.slug]), data=form_data
+        )
         self.assertEqual(post_response.status_code, 302)
 
         # Check if slug and title changed correctly
@@ -181,9 +185,16 @@ class TestViews(TestCase):
     # Tests for CommentCreateView:
     def test_comment_create_view_creates_new_comment_object(self):
         self.client.force_login(self.staff_member)
-        form_data = {'season': self.season, 'user': self.staff_member, 'body': 'This is a new comment'}
+        form_data = {
+            'season': self.season,
+            'user': self.staff_member,
+            'body': 'This is a new comment'
+        }
+
         previous_comment_count = Comment.objects.all().count()
-        response = self.client.post(reverse('season_comment', args=[self.season.slug]), data=form_data)
+        response = self.client.post(
+            reverse('season_comment', args=[self.season.slug]), data=form_data
+        )
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Comment.objects.all().count(), previous_comment_count + 1)
@@ -200,7 +211,9 @@ class TestViews(TestCase):
     def test_comment_create_view_get_success_url_method_successfully_redirects(self):
         self.client.force_login(self.staff_member)
         form_data = {'season': self.season, 'user': self.staff_member, 'body': 'This is a test'}
-        response = self.client.post(reverse('season_comment', args=[self.season.slug]), data=form_data)
+        response = self.client.post(
+            reverse('season_comment', args=[self.season.slug]), data=form_data
+        )
         success_url = reverse('season_detail', kwargs={'slug': self.season.slug}) # type: ignore
 
         self.assertEqual(response.status_code, 302)
@@ -209,14 +222,17 @@ class TestViews(TestCase):
     # Tests for CommentUpdateView:
     def test_comment_update_view_correctly_updates_object(self):
         self.client.force_login(self.staff_member)
-        
+
         # Current comment
         self.assertEqual(self.comment.body, 'Test comment')
         self.assertEqual(self.comment.pk, 1)
-        
+
         # Post updated form and check redirect
         form_data = {'body': 'Updated Comment'}
-        post_response = self.client.post(reverse('update_comment', kwargs={'slug': self.season.slug, 'pk': self.comment.pk}), data=form_data)
+        slug = self.season.slug
+        post_response = self.client.post(
+            reverse('update_comment', kwargs={'slug': slug, 'pk': self.comment.pk}), form_data
+        )
         self.assertEqual(post_response.status_code, 302)
 
         # Check if slug and title changed correctly
@@ -226,7 +242,9 @@ class TestViews(TestCase):
     # Tests for CommentDeleteView:
     def test_comment_delete_view_successfully_deletes_object(self):
         self.client.force_login(self.staff_member)
-        response = self.client.post(reverse('delete_comment', kwargs={'slug': self.season.slug, 'pk': self.comment.pk}))
+        response = self.client.post(
+            reverse('delete_comment', kwargs={'slug': self.season.slug, 'pk': self.comment.pk})
+        )
 
         self.assertEqual(response.status_code, 302)
 
@@ -242,16 +260,31 @@ class TestViews(TestCase):
 
         previous_reply_count = CommentReply.objects.filter(comment=self.comment).count()
 
-        form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a new reply'}
-        response = self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+        form_data = {
+            'comment': self.comment,
+            'user': self.staff_member,
+            'body': 'This is a new reply'
+        }
+
+        slug = self.season.slug
+        comment_id = self.comment.pk
+        response = self.client.post(
+            reverse('comment_reply', kwargs={'slug': slug, 'id': comment_id}), form_data
+        )
+
+        all_replies = CommentReply.objects.filter(comment=self.comment)
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(CommentReply.objects.filter(comment=self.comment).count(), previous_reply_count + 1)
+        self.assertEqual(all_replies.count(), previous_reply_count + 1)
 
     def test_reply_create_view_form_valid_method_sets_comment_and_user_correctly(self):
         self.client.force_login(self.staff_member)
         form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a test'}
-        self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+        slug = self.season.slug
+        comment_id = self.comment.pk
+        self.client.post(
+            reverse('comment_reply', kwargs={'slug': slug, 'id': comment_id}), form_data
+        )
         new_reply = CommentReply.objects.last()
 
         self.assertEqual(new_reply.user, self.staff_member) # type: ignore
@@ -260,7 +293,11 @@ class TestViews(TestCase):
     def test_reply_create_view_get_success_url_method_successfully_redirects(self):
         self.client.force_login(self.staff_member)
         form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a test'}
-        response = self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+        slug = self.season.slug
+        comment_id = self.comment.pk
+        response = self.client.post(
+            reverse('comment_reply', kwargs={'slug': slug, 'id': comment_id}), form_data
+        )
         success_url = reverse('season_detail', kwargs={'slug': self.season.slug})
 
         self.assertEqual(response.status_code, 302)
@@ -270,7 +307,7 @@ class TestViews(TestCase):
     def test_spotify_api_form_view_get_context_data(self):
         self.client.force_login(self.staff_member)
         response = self.client.get(reverse('spotify_search', kwargs={'slug': self.season.slug}))
-        
+
         # Search results are initially set to "None" in view
         self.assertIsNone(response.context['search_results'])
         self.assertEqual(str(self.season.slug), response.context['season_slug'])
