@@ -223,8 +223,50 @@ class TestViews(TestCase):
         updated_comment = Comment.objects.get(pk=1)
         self.assertEqual(updated_comment.body, 'Updated Comment')
 
-    # def test_comment_delete_view_POST(self):
-    #     pass
+
+    # Tests for CommentDeleteView:
+    def test_comment_delete_view_successfully_deletes_object(self):
+        self.client.force_login(self.staff_member)
+        response = self.client.post(reverse('delete_comment', kwargs={'slug': self.season.slug, 'pk': self.comment.pk}))
+
+        self.assertEqual(response.status_code, 302)
+
+        # Filter with pk for deleted comment
+        deleted_comment = Comment.objects.filter(pk=1)
+
+        # Check if none exist
+        self.assertEqual(deleted_comment.count(), 0)
+
+    
+    # Tests for ReplyCreateView:
+    def test_reply_create_view_creates_new_reply_object(self):
+        self.client.force_login(self.staff_member)
+
+        previous_reply_count = CommentReply.objects.filter(comment=self.comment).count()
+
+        form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a new reply'}
+        response = self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(CommentReply.objects.filter(comment=self.comment).count(), previous_reply_count + 1)
+
+    def test_reply_create_view_form_valid_method_sets_comment_and_user_correctly(self):
+        self.client.force_login(self.staff_member)
+        form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a test'}
+        self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+        new_reply = CommentReply.objects.last()
+
+        self.assertEqual(new_reply.user, self.staff_member) # type: ignore
+        self.assertEqual(new_reply.comment, self.comment) # type: ignore
+
+    def test_reply_create_view_get_success_url_method_successfully_redirects(self):
+        self.client.force_login(self.staff_member)
+        form_data = {'comment': self.comment, 'user': self.staff_member, 'body': 'This is a test'}
+        response = self.client.post(reverse('comment_reply', kwargs={'slug': self.season.slug, 'id': self.comment.pk}), data=form_data)
+        success_url = reverse('season_detail', kwargs={'slug': self.season.slug})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, success_url)
 
     # def test_reply_create_view_POST(self):
     #     pass
