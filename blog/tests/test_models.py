@@ -1,6 +1,8 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from blog.models import Season, Comment, CommentReply
+
+User = get_user_model()
 
 
 class TestModels(TestCase):
@@ -36,7 +38,7 @@ class TestModels(TestCase):
             created_on='01-01-2023',
         )
 
-        self.assertEqual(season.__str__(), season.title)
+        self.assertEqual(str(season), season.title)
 
     def test_comment_model_str_method_returns_body(self):
         season = Season.objects.create(
@@ -52,7 +54,7 @@ class TestModels(TestCase):
             body='Test Body Content'
         )
 
-        self.assertEqual(comment.__str__(), comment.body)
+        self.assertEqual(str(comment), comment.body)
 
     def test_comment_reply_model_str_method_returns_body(self):
         season = Season.objects.create(
@@ -73,4 +75,4 @@ class TestModels(TestCase):
             body='Test Reply Body Content'
         )
 
-        self.assertEqual(reply.__str__(), reply.body)
+        self.assertEqual(str(reply), reply.body)
