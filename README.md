@@ -31,12 +31,16 @@ To access the live site, you can click [**here**](https://we-rate-music-simplifi
    - [Spotify API Integration](#spotify-api-integration)
    - [The Comment Section](#the-comment-section)
    - [Triggered Bootstrap Alerts](#triggered-bootstrap-alerts)
+   - [Responsive Design](#responsive-design)
 5. [Future Features/Roadmap](#future-featuresroadmap)
 6. [Testing](#testing)
+   - [Lighthouse Testing](#lighthouse-testing)
    - [W3C Markup Validation](#w3c-markup-validation)
    - [W3C CSS Validation](#w3c-css-validation)
    - [JS Hint](#js-hint)
    - [Pylint-Django](#pylint-django)
+   - [Automated Testing](#automated-testing)
+   - [Manual Testing](#manual-testing)
 7. [Challenges & Bugs](#challenges--bugs)
 8. [Technologies Used](#technologies-used)
 9. [Deployment](#deployment)
@@ -73,6 +77,16 @@ Site User Goald
 </center>
 
 The wireframes were made utilising the [Balsamiq Wireframe](https://balsamiq.com/) tool, focusing primarily on the landing pages of desktop and mobile views. Once a suitable pre-made Bootstrap theme was found on [Start Bootstrap](https://startbootstrap.com/template/blog-home) developing and matching the rest of the web application to be in line with the initial idea was made easy.
+
+**Design**
+
+<center>
+
+![Colour Scheme](docs/readme/images/pinterest.JPG)
+
+</center>
+
+The colour scheme was put together by browsing through [Pinterest](https://www.pinterest.co.uk/)
 
 **The Agile Method**
 
@@ -191,6 +205,22 @@ Once clicked, admins are directed to the Season post form page where they can cr
 
 </center>
 
+Season posts can be updated or deleted.
+
+<center>
+
+![Create Season Form](docs/readme/images/crud-detail-view.png)
+
+</center>
+
+Choosing to delete a Season post will trigger a confirmation modal.
+
+<center>
+
+![Create Season Form](docs/readme/images/season-post-delete-modal.png)
+
+</center>
+
 ### Add Playlists
 
 Once Season posts are created, admins can add playlists from Spotify to display in their posts.
@@ -306,6 +336,34 @@ Using custom JavaScript, the alerts remain on screen for 2.5 seconds before auto
 </center>
 
 ### Responsive Design
+
+Utilising Bootstrap 5's capabilities to design the application's layout made it easy to make the application compatible with all major platforms, including desktops, tablets, and smartphones.
+
+**Large Sized Screens**
+
+<center>
+
+![Large Screens](docs/readme/images/responsive-design-large.png)
+
+</center>
+
+**Medium Sized Screens**
+
+<center>
+
+![Medium Screens](docs/readme/images/responsive-design-medium.png)
+
+</center>
+
+**Small Sized Screens**
+
+<center>
+
+![Small Screens](docs/readme/images/responsive-design-small.png)
+
+</center>
+
+Smaller screen such as mobile devices also have a responsive navbar element, with the classic burger menu.
 
 <center>
 
@@ -568,6 +626,7 @@ To the best of my knowledge no known, unfixed bugs exist.
 - CSS
 - JavaScript
 - Python 3.11.1
+- Django 4.2.3
 - Bootstrap 5
 
 ### **Tools**
