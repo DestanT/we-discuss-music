@@ -37,7 +37,7 @@ To access the live site, you can click [**here**](https://we-rate-music-simplifi
    - [W3C CSS Validation](#w3c-css-validation)
    - [JS Hint](#js-hint)
    - [Pylint-Django](#pylint-django)
-7. [Challenges & Bugs](#challenges—bugs)
+7. [Challenges & Bugs](#challenges--bugs)
 8. [Technologies Used](#technologies-used)
 9. [Deployment](#deployment)
 10. [Creating the Heroku app](#creating-the-heroku-app)
@@ -327,6 +327,7 @@ In future sprints, the application will include several new features:
 - **Comment Upvotes:** Users can like/upvote a comment. Comments that rank higher will display higher.
 - **CRUD for Replies:** All CRUD (Create, Read, Update, Delete) operations will be available on replies. The "_(edited)_" feature from comments will also be made available.
 - **Admin Playlist Management:** Admin users will gain the ability to delete unwanted playlists directly from posts without requiring access to the admin panel.
+- **Better Performance:** Optimising the Cloudinary integration for better Lighthouse performance results.
 
 <p align="right"><a href="#table-of-contents"><em>(Back to top)</em></a></p>
 
@@ -405,7 +406,131 @@ All of my own custom CSS passed validation, however, 16 errors and 258 warnings 
 - blog/tests/test_views.py: 9.94/10
   - 10:0: R0904: Too many public methods (29/20) (too-many-public-methods) - in hindsight and given more time, I would have written this test file very differently.
 
-### **Process**
+### **Automated Testing**
+
+Achieving a test coverage of 92% was a significant milestone for the project. All unit tests associated with the project can be found within the "blog" app folder, specifically within the "tests" folder.
+
+#### **test_forms - 100%**
+
+Here is the full test results the project's forms:
+
+<center>
+
+![test_forms](docs/readme/images/test-forms.png)
+
+</center>
+
+#### **test_models - 100%**
+
+Here is the full test results the project's models:
+
+<center>
+
+![test_models](docs/readme/images/test-models.png)
+
+</center>
+
+#### **test_urls - 100%**
+
+Here is the full test results the project's urls:
+
+<center>
+
+![test_urls](docs/readme/images/test-urls.png)
+
+</center>
+
+#### **test_views - 86%**
+
+Here is the full test results the project's views:
+
+<center>
+
+![test_views](docs/readme/images/test-views.png)
+
+</center>
+
+#### **Coverage Report - 92%**
+
+Here is the full coverage test report:
+
+<center>
+
+![Coverage Report](docs/readme/images/coverage-report.png)
+
+</center>
+
+### **Manual Testing**
+
+Manual testing below is primarily focused on the missing areas outlined by the coverage report (views.py):
+
+<center>
+
+![Missing test areas](docs/readme/images/coverage-report-missing-tests.png)
+
+</center>
+
+#### **Remaining Views Tests**
+
+<u>Search Spotify API</u>
+
+| Test                                         | Expected Outcome(s)                |   Pass   |
+| :------------------------------------------- | :--------------------------------- | :------: |
+| Leave search bar empty                       | "Field is required"                | &#10003; |
+| Valid search, no parameters                  | "Field is required"                | &#10003; |
+| Valid search, "Album" parameter ticked       | Valid search is executed           | &#10003; |
+| Valid search, "Playlist" parameter ticked    | Valid search is executed           | &#10003; |
+| Valid search, both parameter ticked          | Valid search is executed           | &#10003; |
+| Leave page and come back to search playlists | Previous search results still show | &#10003; |
+
+<u>Adding Playlists</u>
+
+| Test                                                            | Expected Outcome(s)                                           |   Pass   |
+| :-------------------------------------------------------------- | :------------------------------------------------------------ | :------: |
+| Click "Add Playlist"                                            | Confirmation modal pops up                                    | &#10003; |
+| Click "Add Playlist" in confirmation modal                      | Redirected to Season detail, playlist added to season post    | &#10003; |
+| Click the newly added playlist in the Season post               | Spotify's iFrame player activates                             | &#10003; |
+| Play music from iFrame player                                   | Music starts to play                                          | &#10003; |
+| Search for and add the same playlist in the same Season post    | Redirected to Season detail, no duplicate playlist            | &#10003; |
+| Search for and add the same playlist to a different Season post | Redirected to Season detail, playlist is in both Season Posts | &#10003; |
+| When playlist is added                                          | Success message appears and disappears after 2.5 seconds      | &#10003; |
+
+#### **Static JavaScript**
+
+<u>Testing iFrame player</u>
+
+| Test                                                    | Expected Outcome(s)                                                |   Pass   |
+| :------------------------------------------------------ | :----------------------------------------------------------------- | :------: |
+| In Season post detail view, click an available playlist | Spotify's iFrame player activates                                  | &#10003; |
+| While iFrame player is active, click another playlist   | Current music stops and clicked playlist's iFrame player activates | &#10003; |
+
+<u>Testing reply links</u>
+
+| Test                                          | Expected Outcome(s)                                                 |   Pass   |
+| :-------------------------------------------- | :------------------------------------------------------------------ | :------: |
+| Click on any 'reply' link in comments section | Comment form changes to reply form, with "replying to {user}" above | &#10003; |
+| Press "X" to close reply form                 | Reply form closes and comment form takes its place                  | &#10003; |
+| Leave reply form empty                        | "Field is required"                                                 | &#10003; |
+| Reply to any user                             | Reply displays offset and underneath user's comment                 | &#10003; |
+
+<u>Testing edit comment button</u>
+
+| Test                                        | Expected Outcome(s)                                       |   Pass   |
+| :------------------------------------------ | :-------------------------------------------------------- | :------: |
+| On own comment, click "pencil" icon to edit | Textbox with original message appears in place of comment | &#10003; |
+| Modify comment and click "Update"           | Updated comment shows instead of the old comment          | &#10003; |
+
+<u>Testing Alerts' Auto Close Feature</u>
+
+| Test                                | Expected Outcome(s)                                                                       |   Pass   |
+| :---------------------------------- | :---------------------------------------------------------------------------------------- | :------: |
+| Log in to your account              | "Successfully signed in as {user}" displays and disappears after 2.5 seconds              | &#10003; |
+| Log out of your account             | "You have signed out." displays and disappears after 2.5 seconds                          | &#10003; |
+| Update Season post                  | "The Season post has been updated" displays and disappears after 2.5 seconds              | &#10003; |
+| Delete Season post                  | "The Season post has been deleted successfully" displays and disappears after 2.5 seconds | &#10003; |
+| Add Spotify playlist to Season post | "Playlist added successfully!" displays and disappears after 2.5 seconds                  | &#10003; |
+| Update comment                      | "Your comment has been updated" displays and disappears after 2.5 seconds                 | &#10003; |
+| Delete comment                      | "Your comment has been deleted successfully" displays and disappears after 2.5 seconds    | &#10003; |
 
 <p align="right"><a href="#table-of-contents"><em>(Back to top)</em></a></p>
 
