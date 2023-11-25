@@ -14,7 +14,11 @@ Register an account with us and join in on the conversations! Share your thought
 
 To access the live site, you can click [**here**](https://we-rate-music-simplified-c7886543742e.herokuapp.com/).
 
+<center>
+
 ![Am I Responsive image](docs/readme/images/am-i-responsive.png)
+
+</center>
 
 ## **Table of Contents**
 
@@ -62,7 +66,11 @@ Site User Goald
 
 **Wireframe**
 
+<center>
+
 ![The Wireframe](docs/readme/images/wireframe-png.png)
+
+</center>
 
 The wireframes were made utilising the [Balsamiq Wireframe](https://balsamiq.com/) tool, focusing primarily on the landing pages of desktop and mobile views. Once a suitable pre-made Bootstrap theme was found on [Start Bootstrap](https://startbootstrap.com/template/blog-home) developing and matching the rest of the web application to be in line with the initial idea was made easy.
 
@@ -70,11 +78,19 @@ The wireframes were made utilising the [Balsamiq Wireframe](https://balsamiq.com
 
 For this project, I opted to primarily use my "Project Sprints" board (pictured below) on GitHub. This was a great tool planning my days and weeks ahead. It gave me a great overview of what was absolutely required and if time was left, what the next most impactful thing would be - to work on for the rest of the assigned time. However, with larger or more long-term projects, this method would encounter some issues. So, in hindsight, I will probably find another way in the future.
 
+<center>
+
 ![Project Sprints](docs/readme/images/timeline-agile.png)
+
+</center>
 
 As a secondary view, I also had the classic Kanban view of my project's user stories.
 
+<center>
+
 ![Kanban Board](docs/readme/images/kanban-agile.png)
+
+</center>
 
 <p align="right"><a href="#table-of-contents"><em>(Back to top)</em></a></p>
 
@@ -82,7 +98,11 @@ As a secondary view, I also had the classic Kanban view of my project's user sto
 
 ## **Database Modelling**
 
+<center>
+
 ![The Database Model Diagram](docs/readme/images/database-model-diagram.png)
+
+</center>
 
 ### **The Models**
 
@@ -133,73 +153,137 @@ The CommentReply model stores users' replies given to comments. The attributes a
 
 At its foundation, the Season Posts are what drive the platform. Each post revolves around a specific musical theme, put together by dedicated site administrators. The posts house the Spotify playlists themselves and their discussions between users.
 
+<center>
+
 ![Season Posts](docs/readme/images/season-posts.png)
+
+</center>
 
 These posts are paginated, showing four posts per page to speed up load times and ensure minimising scrolling for an overall better user experience. It is also worth mentioning that the most recent post is always featured on top of the page with a larger image, regardless of pagination.
 
+<center>
+
 ![Site Pagination](docs/readme/images/site-pagination.png)
+
+</center>
 
 For even greater convenience to the user; all Season posts can be found and are clickable on a widget, located to the right of the page (bottom on mobile).
 
+<center>
+
 ![Widget](docs/readme/images/season-finder.png)
+
+</center>
 
 The "Create Season" button in the navbar is exclusively available to site administrators.
 
+<center>
+
 ![Navbar Create Season Button](docs/readme/images/create-season-button.png)
+
+</center>
 
 Once clicked, admins are directed to the Season post form page where they can create a new post, adding a title, description and a cover image to display to users.
 
+<center>
+
 ![Create Season Form](docs/readme/images/create-season-post-form.png)
+
+</center>
 
 ### Add Playlists
 
 Once Season posts are created, admins can add playlists from Spotify to display in their posts.
 
+<center>
+
 ![Add Playlists to Season Posts](docs/readme/images/add-playlist-button-detail-view.png)
+
+</center>
 
 They can narrow down their search by specifiying parameters - "Playlist" or "Album" or both.
 
+<center>
+
 ![Search Spotify](docs/readme/images/spotify-search.png)
+
+</center>
 
 Search results can be clicked and the playlist can be listened to directly on the platform.
 
+<center>
+
 ![Add Playlist Button After Searching](docs/readme/images/add-playlist-button.png)
+
+</center>
 
 The "Add Playlist" button can be pressed to activate a confirmation modal, before then finally adding the playlist/album to the Season post.
 
+<center>
+
 ![Add Playlist Confirmation Modal](docs/readme/images/add-playlist-confirmation-modal.png)
+
+</center>
 
 ### Spotify API Integration
 
 The Spotify API works twofold; enabling site administrators to search for and display Spotify playlists/albums on Season posts and allowing all users to experience the music without ever leaving the platform through the embedded player.
 
+<center>
+
 ![iFrame Player](docs/readme/images/iframe-player-detail-view.png)
+
+</center>
 
 ### The Comment Section
 
 Registered users can engage in the comment section by sharing their opinions.
 
+<center>
+
 ![Comments](docs/readme/images/comment-form.png)
+
+</center>
 
 Icons below user's own comments allow for them to be edited or deleted.
 
+<center>
+
 ![CRUD Functions on comments](docs/readme/images/crud-comments.png)
+
+</center>
 
 The "edit" icon:
 
+<center>
+
 ![Updating comment](docs/readme/images/comment-update.png)
+
+</center>
 
 Clicking the "trash" icon activates a confirmation modal:
 
+<center>
+
 ![Deleting a comment](docs/readme/images/comment-delete-modal.png)
+
+</center>
 
 Registered users can also reply to specific comments to better drive a conversation.
 
+<center>
+
 ![Replying to a comment](docs/readme/images/reply-form.png)
+
+</center>
 
 All comments and replies show if the user is an admin.
 
+<center>
+
 ![Admin users in the comment section](docs/readme/images/replies-admin-status.png)
+
+</center>
 
 ### Triggered Bootstrap Alerts
 
@@ -215,11 +299,19 @@ Bootstrap alerts are triggered for various actions across the platform, giving u
 
 Using custom JavaScript, the alerts remain on screen for 2.5 seconds before automatically closing.
 
+<center>
+
 ![Bootstrap Alerts](docs/readme/images/alerts.png)
+
+</center>
 
 ### Responsive Design
 
+<center>
+
 ![Burger Menu on Mobile Devices](docs/readme/images/collapsible-menu.png)
+
+</center>
 
 <p align="right"><a href="#table-of-contents"><em>(Back to top)</em></a></p>
 
@@ -246,11 +338,19 @@ In future sprints, the application will include several new features:
 
 <u>Desktop</u>
 
+<center>
+
 ![Homepage - Desktop](docs/readme/images/desktop-lighthouse-test-homepage.png)
+
+</center>
 
 <u>Mobile</u>
 
+<center>
+
 ![Homepage - Mobile](docs/readme/images/mobile-lighthouse-test-homepage.png)
+
+</center>
 
 This test revealed performance issues, primarily due to image sizing and unused CSS.
 
